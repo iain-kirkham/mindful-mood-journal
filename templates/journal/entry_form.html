@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Create Entry</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <h3>List three things you're grateful for</h3>
+    {{ formset.management_form }}
+    {% for frm in formset.forms %}
+      {{ frm.as_p }}
+    {% endfor %}
+    <button type="submit">Create</button>
+  </form>
+{% endblock %}

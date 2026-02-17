@@ -2,6 +2,17 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+MOOD_CHOICES = [
+    ("happy", "Happy"),
+    ("anxious", "Anxious"),
+    ("sad", "Sad"),
+    ("neutral", "Neutral"),
+    ("excited", "Excited"),
+    ("frustrated", "Frustrated"),
+    ("calm", "Calm"),
+    ("stressed", "Stressed"),
+]
+
 
 class Entry(models.Model):
     user = models.ForeignKey(
@@ -10,7 +21,7 @@ class Entry(models.Model):
         related_name="entries",
     )
     date = models.DateTimeField()
-    mood = models.CharField(max_length=50)
+    mood = models.CharField(max_length=50, choices=MOOD_CHOICES)
     mood_rating = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
