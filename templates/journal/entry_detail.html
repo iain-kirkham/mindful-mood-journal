@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ entry.title }}</h1>
+  <div class="entry-meta">
+    <span class="date">{{ entry.date|date:"d M Y" }}</span>
+    <span class="mood">{{ entry.get_mood_display }}</span>
+    <span class="mood-rating">Mood: {{ entry.mood_rating }}/5</span>
+  </div>
+
+  <div class="entry-content">
+    {{ entry.content|linebreaksbr }}
+  </div>
+
+  {% if entry.gratitude_items.all %}
+    <div class="gratitude-section">
+      <h2>Grateful for</h2>
+      <ul>
+        {% for item in entry.gratitude_items.all %}
+          <li>{{ item.item_text }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <p>
+    <a href="{% url 'journal:entry_list' %}">Back to entries</a>
+  </p>
+{% endblock %}

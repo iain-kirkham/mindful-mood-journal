@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.views.generic import DetailView, ListView
 
 from .forms import EntryForm, GratitudeFormSet
 from .models import Entry
@@ -31,6 +31,15 @@ class EntryListView(LoginRequiredMixin, ListView):
     template_name = "journal/entry_list.html"
     context_object_name = "entries"
     paginate_by = 10
+
+    def get_queryset(self):
+        return Entry.objects.filter(user=self.request.user).prefetch_related("gratitude_items")
+
+
+class EntryDetailView(LoginRequiredMixin, DetailView):
+    model = Entry
+    template_name = "journal/entry_detail.html"
+    context_object_name = "entry"
 
     def get_queryset(self):
         return Entry.objects.filter(user=self.request.user).prefetch_related("gratitude_items")
