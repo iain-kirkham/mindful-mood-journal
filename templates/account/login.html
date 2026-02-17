@@ -1,20 +1,26 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
-{% block title %}Sign In - MoodJournal{% endblock %}
+{% block title %}Sign In — MoodJournal{% endblock %}
 
 {% block content %}
   <div class="row justify-content-center">
     <div class="col-md-6 col-lg-5">
-      <h1 class="mb-4">Sign In</h1>
-      <form method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">Sign In</button>
-      </form>
-      <p class="mt-3">
-        Don't have an account? <a href="{% url 'account_signup' %}">Sign up</a>
-      </p>
+      <div class="card">
+        <div class="card-header">
+          <h1 class="h4 mb-0">Sign In</h1>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary w-100 mt-2">Sign In</button>
+          </form>
+        </div>
+        <div class="card-footer text-center small">
+          Don't have an account? <a href="{% url 'account_signup' %}">Sign up</a>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}

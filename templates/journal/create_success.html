@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 
+{% block title %}Entry Saved — MoodJournal{% endblock %}
+
 {% block content %}
-  <h1>Entry Created</h1>
-  <p>Your entry was saved successfully.</p>
-  <a href="/">Return home</a>
+  <div class="row justify-content-center">
+    <div class="col-md-6 text-center py-5">
+      <h1 class="h3">Entry Saved!</h1>
+      <p class="text-subtext mt-2">Your journal entry was saved successfully.</p>
+      <div class="d-flex justify-content-center gap-2 mt-4">
+        <a href="{% url 'journal:entry_list' %}" class="btn btn-primary">My Entries</a>
+        <a href="{% url 'journal:entry_create' %}" class="btn btn-outline-secondary">New Entry</a>
+      </div>
+    </div>
+  </div>
 {% endblock %}

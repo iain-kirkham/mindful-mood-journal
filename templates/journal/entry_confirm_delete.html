@@ -1,11 +1,27 @@
 {% extends "base.html" %}
 
+{% block title %}Delete Entry — MoodJournal{% endblock %}
+
 {% block content %}
-  <h1>Delete Entry</h1>
-  <p>Are you sure you want to delete "{{ object.title }}"?</p>
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit">Yes, delete</button>
-    <a href="{% url 'journal:entry_detail' object.pk %}">Cancel</a>
-  </form>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h1 class="h4 mb-0">Delete Entry</h1>
+        </div>
+        <div class="card-body">
+          <p class="mb-1">Are you sure you want to delete:</p>
+          <p class="fs-5 fw-semibold">"{{ object.title }}"</p>
+          <p class="text-subtext small">This action cannot be undone.</p>
+        </div>
+        <div class="card-footer d-flex gap-2">
+          <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+          </form>
+          <a href="{% url 'journal:entry_detail' object.pk %}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

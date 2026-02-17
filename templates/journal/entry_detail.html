@@ -1,33 +1,58 @@
 {% extends "base.html" %}
 
+{% block title %}{{ entry.title }} — MoodJournal{% endblock %}
+
 {% block content %}
-  <h1>{{ entry.title }}</h1>
-  <div class="entry-meta">
-    <span class="date">{{ entry.date|date:"d M Y" }}</span>
-    <span class="mood">{{ entry.get_mood_display }}</span>
-    <span class="mood-rating">Mood: {{ entry.mood_rating }}/5</span>
-  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
 
-  <div class="entry-content">
-    {{ entry.content|linebreaksbr }}
-  </div>
+      <!-- Back link -->
+      <a href="{% url 'journal:entry_list' %}" class="d-inline-flex align-items-center gap-1 small mb-3 text-subtext text-decoration-none">
+        ← Back to entries
+      </a>
 
-  {% if entry.gratitude_items.all %}
-    <div class="gratitude-section">
-      <h2>Grateful for</h2>
-      <ul>
-        {% for item in entry.gratitude_items.all %}
-          <li>{{ item.item_text }}</li>
-        {% endfor %}
-      </ul>
+      <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
+          <div>
+            <h1 class="h4 mb-0">{{ entry.title }}</h1>
+            <small class="text-subtext">{{ entry.date|date:"l, d F Y" }}</small>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <span class="mood-badge mood-{{ entry.mood }}">{{ entry.get_mood_display }}</span>
+            <span class="mood-rating" title="Mood rating: {{ entry.mood_rating }}/5" aria-label="Mood rating {{ entry.mood_rating }} out of 5">
+              {% for i in "12345" %}
+                {% if forloop.counter <= entry.mood_rating %}
+                  <span class="rating-pill filled" aria-hidden="true"></span>
+                {% else %}
+                  <span class="rating-pill empty" aria-hidden="true"></span>
+                {% endif %}
+              {% endfor %}
+            </span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Journal content -->
+          <p class="lh-lg">{{ entry.content }}</p>
+
+          <!-- Gratitude list -->
+          {% if entry.gratitude_items.all %}
+            <hr style="border-color: var(--ctp-surface0);">
+            <h5 class="mb-3">Grateful for</h5>
+            <ul class="gratitude-list ps-3">
+              {% for item in entry.gratitude_items.all %}
+                <li>{{ item.item_text }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <div class="card-footer d-flex gap-2">
+          <a href="{% url 'journal:entry_update' entry.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+          <a href="{% url 'journal:entry_delete' entry.pk %}" class="btn btn-outline-secondary btn-sm ms-auto text-danger">Delete</a>
+        </div>
+      </div>
+
     </div>
-  {% endif %}
-
-  <p>
-    <a href="{% url 'journal:entry_update' entry.pk %}">Edit entry</a>
-    |
-    <a href="{% url 'journal:entry_delete' entry.pk %}">Delete entry</a>
-    |
-    <a href="{% url 'journal:entry_list' %}">Back to entries</a>
-  </p>
+  </div>
 {% endblock %}

@@ -1,17 +1,25 @@
 {% extends "base.html" %}
 
-{% block title %}Sign Out - MoodJournal{% endblock %}
+{% block title %}Sign Out — MoodJournal{% endblock %}
 
 {% block content %}
   <div class="row justify-content-center">
     <div class="col-md-6 col-lg-5">
-      <h1 class="mb-4">Sign Out</h1>
-      <p>Are you sure you want to sign out?</p>
-      <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Sign Out</button>
-        <a href="{% url 'journal:home' %}" class="btn btn-outline-secondary">Cancel</a>
-      </form>
+      <div class="card">
+        <div class="card-header">
+          <h1 class="h4 mb-0">Sign Out</h1>
+        </div>
+        <div class="card-body">
+          <p class="text-subtext">Are you sure you want to sign out?</p>
+          <form method="post">
+            {% csrf_token %}
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-danger">Sign Out</button>
+              <a href="{% url 'journal:home' %}" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}

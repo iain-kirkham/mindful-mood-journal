@@ -1,67 +1,82 @@
 {% extends "base.html" %}
 
+{% block title %}My Entries — MoodJournal{% endblock %}
+
 {% block content %}
-  <h1>My Journal Entries</h1>
-  
-  <p>
-    <a href="{% url 'journal:entry_create' %}">Create New Entry</a>
-  </p>
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0">My Journal Entries</h1>
+    <a href="{% url 'journal:entry_create' %}" class="btn btn-primary btn-sm">+ New Entry</a>
+  </div>
 
   {% if entries %}
-    <div class="entries-list">
+    <div class="row row-cols-1 row-cols-md-2 g-3">
       {% for entry in entries %}
-        <article class="entry-card">
-          <div class="entry-header">
-            <h2>{{ entry.title }}</h2>
-            <div class="entry-meta">
-              <span class="date">{{ entry.date|date:"d M Y" }}</span>
-              <span class="mood">{{ entry.get_mood_display }}</span>
-              <span class="mood-rating">Mood: {{ entry.mood_rating }}/5</span>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+              <small class="text-subtext">{{ entry.date|date:"d M Y" }}</small>
+              <div class="d-flex align-items-center gap-2">
+                <span class="mood-badge mood-{{ entry.mood }}">{{ entry.get_mood_display }}</span>
+                <span class="mood-rating" title="Mood rating: {{ entry.mood_rating }}/5" aria-label="Mood rating {{ entry.mood_rating }} out of 5">
+                  {% for i in "12345" %}
+                        {% if forloop.counter <= entry.mood_rating %}
+                          <span class="rating-pill filled" aria-hidden="true"></span>
+                        {% else %}
+                          <span class="rating-pill empty" aria-hidden="true"></span>
+                        {% endif %}
+                  {% endfor %}
+                </span>
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{ entry.title }}</h5>
+              <p class="card-text entry-content-preview">{{ entry.content|truncatewords:30 }}</p>
+              {% if entry.gratitude_items.all %}
+                <ul class="list-unstyled gratitude-list mt-2 mb-0 small">
+                  {% for item in entry.gratitude_items.all %}
+                    <li>✦ {{ item.item_text }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+            <div class="card-footer d-flex gap-2">
+              <a href="{% url 'journal:entry_detail' entry.pk %}" class="btn btn-outline-secondary btn-sm">View</a>
+              <a href="{% url 'journal:entry_update' entry.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+              <a href="{% url 'journal:entry_delete' entry.pk %}" class="btn btn-outline-secondary btn-sm ms-auto text-danger">Delete</a>
             </div>
           </div>
-          
-          <p class="entry-content">{{ entry.content|truncatewords:30 }}</p>
-          
-          {% if entry.gratitude_items.all %}
-            <div class="gratitude-section">
-              <h3>Grateful for:</h3>
-              <ul>
-                {% for item in entry.gratitude_items.all %}
-                  <li>{{ item.item_text }}</li>
-                {% endfor %}
-              </ul>
-            </div>
-          {% endif %}
-          
-          <div class="entry-actions">
-            <a href="{% url 'journal:entry_detail' entry.pk %}">View Full Entry</a>
-            |
-            <a href="{% url 'journal:entry_update' entry.pk %}">Edit</a>
-            |
-            <a href="{% url 'journal:entry_delete' entry.pk %}">Delete</a>
-          </div>
-        </article>
+        </div>
       {% endfor %}
     </div>
 
     {% if is_paginated %}
-      <div class="pagination">
-        {% if page_obj.has_previous %}
-          <a href="?page=1">First</a>
-          <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-        {% endif %}
-
-        <span class="page-info">
-          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">Next</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-        {% endif %}
-      </div>
+      <nav class="mt-4" aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">«</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">‹</a></li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">«</span></li>
+            <li class="page-item disabled"><span class="page-link">‹</span></li>
+          {% endif %}
+          <li class="page-item active">
+            <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+          </li>
+          {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">›</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">»</a></li>
+          {% else %}
+            <li class="page-item disabled"><span class="page-link">›</span></li>
+            <li class="page-item disabled"><span class="page-link">»</span></li>
+          {% endif %}
+        </ul>
+      </nav>
     {% endif %}
+
   {% else %}
-    <p>No journal entries yet. <a href="{% url 'journal:entry_create' %}">Create your first entry</a></p>
+    <div class="text-center py-5">
+      <p class="text-subtext fs-5">No journal entries yet.</p>
+      <a href="{% url 'journal:entry_create' %}" class="btn btn-primary mt-2">Write your first entry</a>
+    </div>
   {% endif %}
 {% endblock %}
