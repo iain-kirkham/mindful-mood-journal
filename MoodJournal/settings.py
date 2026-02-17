@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-
+    "journal",
 ]
 
 SITE_ID = 1
@@ -102,9 +102,7 @@ WSGI_APPLICATION = "MoodJournal.wsgi.application"
 # }
 
 DATABASES = {
-    # Note: django-allauth does not provide an AccountMiddleware class;
-    # including it will raise an ImportError. Request context processor
-    # is sufficient for allauth templates.
+    "default": dj_database_url.config(default=os.environ.get("DATABASE_URL"))
 }
 
 # Password validation
