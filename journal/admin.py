@@ -8,4 +8,7 @@ class EntryAdmin(admin.ModelAdmin):
     list_filter = ("date", "mood")
     search_fields = ("title", "content", "user__username")
 
-
+@admin.register(GratitudeItem)
+class GratitudeItemAdmin(admin.ModelAdmin):
+    list_display = ("id", "entry", "item_text")
+    search_fields = ("item_text",)

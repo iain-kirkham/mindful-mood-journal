@@ -24,5 +24,11 @@ class Entry(models.Model):
     def __str__(self):
         return f"{self.user} - {self.title} ({self.date.date()})"
 
+class GratitudeItem(models.Model):
+    entry = models.ForeignKey(
+        Entry, on_delete=models.CASCADE, related_name="gratitude_items"
+    )
+    item_text = models.CharField(max_length=255)
 
-
+    def __str__(self):
+        return self.item_text
