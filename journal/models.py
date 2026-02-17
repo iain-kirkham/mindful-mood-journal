@@ -32,3 +32,10 @@ class GratitudeItem(models.Model):
 
     def __str__(self):
         return self.item_text
+
+class Quote(models.Model):
+    text = models.TextField()
+    author = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return f"{self.text[:50]}{'...' if len(self.text) > 50 else ''} - {self.author}"

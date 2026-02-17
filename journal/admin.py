@@ -12,3 +12,8 @@ class EntryAdmin(admin.ModelAdmin):
 class GratitudeItemAdmin(admin.ModelAdmin):
     list_display = ("id", "entry", "item_text")
     search_fields = ("item_text",)
+
+@admin.register(Quote)
+class QuoteAdmin(admin.ModelAdmin):
+    list_display = ("id", "author")
+    search_fields = ("text", "author")
