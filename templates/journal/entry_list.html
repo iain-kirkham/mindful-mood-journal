@@ -36,6 +36,8 @@
           <div class="entry-actions">
             <a href="{% url 'journal:entry_detail' entry.pk %}">View Full Entry</a>
             |
+            <a href="{% url 'journal:entry_update' entry.pk %}">Edit</a>
+            |
             <a href="{% url 'journal:entry_delete' entry.pk %}">Delete</a>
           </div>
         </article>

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Create Entry</h1>
+  <h1>{% if is_edit %}Edit Entry{% else %}Create Entry{% endif %}</h1>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
@@ -10,6 +10,6 @@
     {% for frm in formset.forms %}
       {{ frm.as_p }}
     {% endfor %}
-    <button type="submit">Create</button>
+    <button type="submit">{% if is_edit %}Update{% else %}Create{% endif %}</button>
   </form>
 {% endblock %}

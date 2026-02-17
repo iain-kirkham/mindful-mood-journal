@@ -48,3 +48,7 @@ class GratitudeItemForm(forms.ModelForm):
 GratitudeFormSet = inlineformset_factory(
     Entry, GratitudeItem, form=GratitudeItemForm, extra=3, can_delete=False
 )
+
+GratitudeEditFormSet = inlineformset_factory(
+    Entry, GratitudeItem, form=GratitudeItemForm, extra=0, can_delete=False
+)

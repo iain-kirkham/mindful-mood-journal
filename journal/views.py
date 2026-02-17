@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
 
-from .forms import EntryForm, GratitudeFormSet
+from .forms import EntryForm, GratitudeEditFormSet, GratitudeFormSet
 from .models import Entry
 
 
@@ -53,3 +53,32 @@ class EntryDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return Entry.objects.filter(user=self.request.user)
+
+
+class EntryUpdateView(LoginRequiredMixin, View):
+    def get_object(self, pk):
+        return get_object_or_404(Entry, pk=pk, user=self.request.user)
+
+    def get(self, request, pk):
+        entry = self.get_object(pk)
+        form = EntryForm(instance=entry)
+        formset = GratitudeEditFormSet(instance=entry)
+        return render(
+            request,
+            "journal/entry_form.html",
+            {"form": form, "formset": formset, "is_edit": True, "entry": entry},
+        )
+
+    def post(self, request, pk):
+        entry = self.get_object(pk)
+        form = EntryForm(request.POST, instance=entry)
+        formset = GratitudeEditFormSet(request.POST, instance=entry)
+        if form.is_valid() and formset.is_valid():
+            form.save()
+            formset.save()
+            return redirect("journal:entry_detail", pk=entry.pk)
+        return render(
+            request,
+            "journal/entry_form.html",
+            {"form": form, "formset": formset, "is_edit": True, "entry": entry},
+        )
