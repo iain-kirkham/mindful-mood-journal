@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}MoodJournal - Home{% endblock %}
+
+{% block content %}
+  <section class="py-5">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <h1 class="display-5 fw-semibold">A calm space for daily reflection</h1>
+        <p class="lead mt-3">
+          Journaling helps you slow down, notice patterns, and give your feelings
+          a place to land. A few minutes each day can build clarity, reduce stress,
+          and strengthen emotional resilience over time.
+        </p>
+        <p class="text-secondary">
+          Keep it simple: name your mood, rate your day, and list three things you
+          are grateful for. Small entries add up to big insight.
+        </p>
+        <div class="mt-4 d-flex gap-2">
+          {% if user.is_authenticated %}
+            <a class="btn btn-primary" href="{% url 'journal:entry_create' %}">New Entry</a>
+            <a class="btn btn-outline-secondary" href="{% url 'journal:entry_list' %}">My Entries</a>
+          {% else %}
+            <a class="btn btn-primary" href="/accounts/login/">Get Started</a>
+            <a class="btn btn-outline-secondary" href="/accounts/signup/">Create Account</a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-lg-5 mt-4 mt-lg-0">
+        <div class="p-4 border rounded-3 bg-light">
+          <h2 class="h5">A gentle daily prompt</h2>
+          <ul class="mt-3">
+            <li>How do I feel right now?</li>
+            <li>What gave me energy today?</li>
+            <li>What do I want to remember from today?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
