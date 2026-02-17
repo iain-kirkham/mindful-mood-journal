@@ -1,14 +1,15 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
   <h1>{% if is_edit %}Edit Entry{% else %}Create Entry{% endif %}</h1>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <h3>List three things you're grateful for</h3>
     {{ formset.management_form }}
     {% for frm in formset.forms %}
-      {{ frm.as_p }}
+      {{ frm|crispy }}
     {% endfor %}
     <button type="submit">{% if is_edit %}Update{% else %}Create{% endif %}</button>
   </form>
