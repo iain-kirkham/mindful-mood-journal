@@ -24,6 +24,8 @@
   {% endif %}
 
   <p>
+    <a href="{% url 'journal:entry_delete' entry.pk %}">Delete entry</a>
+    |
     <a href="{% url 'journal:entry_list' %}">Back to entries</a>
   </p>
 {% endblock %}

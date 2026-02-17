@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView, DetailView, ListView
 
 from .forms import EntryForm, GratitudeFormSet
 from .models import Entry
@@ -43,3 +44,12 @@ class EntryDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         return Entry.objects.filter(user=self.request.user).prefetch_related("gratitude_items")
+
+
+class EntryDeleteView(LoginRequiredMixin, DeleteView):
+    model = Entry
+    template_name = "journal/entry_confirm_delete.html"
+    success_url = reverse_lazy("journal:entry_list")
+
+    def get_queryset(self):
+        return Entry.objects.filter(user=self.request.user)
