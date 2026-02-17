@@ -8,7 +8,7 @@ assignees: ''
 
 ---
 
-**As a** user, **I want** to log in and log out of my account, **so that**
+**As a** user, **I want** to **so that**
 
 Acceptance Criteria:
 
