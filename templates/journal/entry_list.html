@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>My Journal Entries</h1>
+  
+  <p>
+    <a href="{% url 'journal:entry_create' %}">Create New Entry</a>
+  </p>
+
+  {% if entries %}
+    <div class="entries-list">
+      {% for entry in entries %}
+        <article class="entry-card">
+          <div class="entry-header">
+            <h2>{{ entry.title }}</h2>
+            <div class="entry-meta">
+              <span class="date">{{ entry.date|date:"d M Y" }}</span>
+              <span class="mood">{{ entry.get_mood_display }}</span>
+              <span class="mood-rating">Mood: {{ entry.mood_rating }}/5</span>
+            </div>
+          </div>
+          
+          <p class="entry-content">{{ entry.content|truncatewords:30 }}</p>
+          
+          {% if entry.gratitude_items.all %}
+            <div class="gratitude-section">
+              <h3>Grateful for:</h3>
+              <ul>
+                {% for item in entry.gratitude_items.all %}
+                  <li>{{ item.item_text }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+          
+          <div class="entry-actions">
+            <a href="#">View Full Entry</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+      <div class="pagination">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">First</a>
+          <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="page-info">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">Next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% else %}
+    <p>No journal entries yet. <a href="{% url 'journal:entry_create' %}">Create your first entry</a></p>
+  {% endif %}
+{% endblock %}

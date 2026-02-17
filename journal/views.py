@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView
 
 from .forms import EntryForm, GratitudeFormSet
+from .models import Entry
 
 
 class EntryCreateView(LoginRequiredMixin, View):
@@ -22,3 +24,13 @@ class EntryCreateView(LoginRequiredMixin, View):
             formset.save()
             return redirect("journal:entry_create_success")
         return render(request, "journal/entry_form.html", {"form": form, "formset": formset})
+
+
+class EntryListView(LoginRequiredMixin, ListView):
+    model = Entry
+    template_name = "journal/entry_list.html"
+    context_object_name = "entries"
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Entry.objects.filter(user=self.request.user).prefetch_related("gratitude_items")
