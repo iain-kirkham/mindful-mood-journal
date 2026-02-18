@@ -374,3 +374,52 @@ footer {
 .ctp-modal-footer {
   border-top: 1px solid var(--ctp-surface0);
 }
+
+/* Homepage quote styling */
+.homepage-quote {
+  max-width: 680px;
+  margin: 0 auto;
+  background-color: var(--ctp-mantle);
+  border: 1px solid var(--ctp-crust);
+  border-left: 4px solid var(--ctp-mauve);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 18px rgba(136, 57, 239, 0.10);
+}
+.homepage-quote .card-body {
+  padding: 1.5rem 1.75rem;
+  position: relative;
+}
+
+.homepage-quote .blockquote {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ctp-subtext1);
+  position: relative;
+}
+.homepage-quote .blockquote p {
+  margin: 0;
+}
+.homepage-quote .blockquote-footer {
+  margin-top: 0.75rem;
+  color: var(--ctp-mauve);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-top: none;
+  padding-top: 0;
+}
+.homepage-quote .blockquote-footer::before {
+  color: var(--ctp-mauve);
+}
+
+@media (max-width: 576px) {
+  .homepage-quote .blockquote {
+    font-size: 1rem;
+  }
+  .homepage-quote .card-body {
+    padding: 1.25rem 1.25rem;
+  }
+}

@@ -38,4 +38,17 @@
       </div>
     </div>
   </section>
+  {% if quote %}
+    <div class="mt-5 mb-2">
+      <p class="text-center text-secondary small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.08em;">Inspirational Quote</p>
+      <div class="card homepage-quote">
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <p>{{ quote.text }}</p>
+            <footer class="blockquote-footer">{{ quote.author }}</footer>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}

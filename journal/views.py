@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView, DetailView, ListView
+from django.views import View
+from django.views.generic import DeleteView, DetailView, ListView, TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.contrib import messages
 
 from .forms import EntryForm, GratitudeEditFormSet, GratitudeFormSet
-from .models import Entry
+from .models import Entry, Quote
 
 
 class EntryCreateView(LoginRequiredMixin, View):
@@ -95,16 +95,14 @@ class EntryUpdateView(LoginRequiredMixin, View):
             {"form": form, "formset": formset, "is_edit": True, "entry": entry},
         )
 
-    def post(self, request, pk):
-        entry = self.get_object(pk)
-        form = EntryForm(request.POST, instance=entry)
-        formset = GratitudeEditFormSet(request.POST, instance=entry)
-        if form.is_valid() and formset.is_valid():
-            form.save()
-            formset.save()
-            return redirect("journal:entry_detail", pk=entry.pk)
-        return render(
-            request,
-            "journal/entry_form.html",
-            {"form": form, "formset": formset, "is_edit": True, "entry": entry},
-        )
+
+class HomeView(TemplateView):
+    template_name = "journal/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            context["quote"] = Quote.objects.order_by("?").first()
+        except Exception:
+            context["quote"] = None
+        return context
