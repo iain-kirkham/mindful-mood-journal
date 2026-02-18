@@ -1,0 +1,40 @@
+<div class="col">
+  <div class="card h-100">
+    <div class="card-header d-flex align-items-center justify-content-between">
+      <small class="text-subtext">{{ entry.date|date:"d M Y" }}</small>
+      <div class="d-flex align-items-center gap-2">
+        <span class="mood-badge mood-{{ entry.mood }}">{{ entry.get_mood_display }}</span>
+        <span class="mood-rating" title="Mood rating: {{ entry.mood_rating }} / 5" aria-label="Mood rating {{ entry.mood_rating }} out of 5">
+          {% for i in "12345" %}
+            {% if forloop.counter <= entry.mood_rating %}
+              <span class="rating-pill filled" aria-hidden="true"></span>
+            {% else %}
+              <span class="rating-pill empty" aria-hidden="true"></span>
+            {% endif %}
+          {% endfor %}
+        </span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ entry.title }}</h5>
+      <p class="card-text entry-content-preview">{{ entry.content|truncatewords:30 }}</p>
+      {% if entry.gratitude_items.all %}
+        <ul class="list-unstyled gratitude-list mt-2 mb-0 small">
+          {% for item in entry.gratitude_items.all %}
+            <li>✦ {{ item.item_text }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+    <div class="card-footer d-flex gap-2">
+      <a href="{% url 'journal:entry_detail' entry.pk %}" class="btn btn-outline-secondary btn-sm">View</a>
+      <a href="{% url 'journal:entry_update' entry.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+      <button type="button"
+              class="btn btn-outline-secondary btn-sm ms-auto text-danger btn-delete-entry"
+              data-delete-url="{% url 'journal:entry_delete' entry.pk %}"
+              data-entry-title="{{ entry.title|escape }}">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>

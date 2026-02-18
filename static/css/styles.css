@@ -354,3 +354,23 @@ footer {
 .gratitude-list li::marker {
   color: var(--ctp-green);
 }
+
+/* Modal styling */
+.ctp-modal-content {
+  background-color: var(--ctp-mantle);
+  border: 1px solid var(--ctp-crust);
+  border-radius: 0.75rem;
+}
+.ctp-modal-header {
+  border-bottom: 1px solid var(--ctp-surface0);
+}
+.ctp-modal-header .modal-title {
+  color: var(--ctp-text);
+  font-weight: 600;
+}
+.ctp-modal-body {
+  color: var(--ctp-subtext1);
+}
+.ctp-modal-footer {
+  border-top: 1px solid var(--ctp-surface0);
+}
