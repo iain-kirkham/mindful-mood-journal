@@ -38,9 +38,12 @@ class EntryListView(LoginRequiredMixin, ListView):
         queryset = Entry.objects.filter(user=self.request.user).prefetch_related("gratitude_items")
         search = self.request.GET.get("search", "").strip()
         if search:
-            queryset = queryset.filter(
-                Q(title__icontains=search) | Q(content__icontains=search) | Q(mood__icontains=search)
-            )
+                queryset = queryset.filter(
+                    Q(title__icontains=search)
+                    | Q(content__icontains=search)
+                    | Q(mood__icontains=search)
+                    | Q(gratitude_items__item_text__icontains=search)
+                ).distinct()
         return queryset
 
     def get_context_data(self, **kwargs):
