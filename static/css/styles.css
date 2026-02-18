@@ -72,7 +72,7 @@
 /* Global */
 
 body {
-  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  font-family: "Montserrat", "Inter", "Segoe UI", system-ui, sans-serif;
   background-color: var(--ctp-base);
   color: var(--ctp-text);
   min-height: 100vh;
