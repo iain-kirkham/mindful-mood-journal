@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
 from django.db.models import Q
+from django.contrib import messages
 
 from .forms import EntryForm, GratitudeEditFormSet, GratitudeFormSet
 from .models import Entry
@@ -68,6 +69,16 @@ class EntryDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return Entry.objects.filter(user=self.request.user)
+
+    def form_valid(self, form):
+        entry_title = self.get_object().title
+        try:
+            response = super().form_valid(form)
+            messages.success(self.request, f'"{entry_title}" was deleted successfully.')
+            return response
+        except Exception:
+            messages.error(self.request, f'Could not delete "{entry_title}". Please try again.')
+            return redirect(self.success_url)
 
 
 class EntryUpdateView(LoginRequiredMixin, View):

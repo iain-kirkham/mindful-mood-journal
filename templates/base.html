@@ -77,6 +77,32 @@
       {% block content %}{% endblock %}
     </main>
 
+    <!-- ── Toast notifications ── -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;" id="toastContainer">
+      {% for message in messages %}
+        <div class="toast align-items-center border-0 mb-2"
+             role="alert" aria-live="assertive" aria-atomic="true"
+             data-bs-autohide="true" data-bs-delay="4000"
+             style="
+               background-color: var(--ctp-mantle);
+               border: 1px solid {% if message.tags == 'error' %}var(--ctp-red){% else %}var(--ctp-green){% endif %} !important;
+               border-radius: 0.65rem;
+             ">
+          <div class="d-flex">
+            <div class="toast-body d-flex align-items-center gap-2" style="color: var(--ctp-text);">
+              {% if message.tags == 'error' %}
+                <span style="color: var(--ctp-red);">✕</span>
+              {% else %}
+                <span style="color: var(--ctp-green);">✔</span>
+              {% endif %}
+              {{ message }}
+            </div>
+            <button type="button" class="btn-close btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
     <!-- ── Footer ── -->
     <footer class="py-3 mt-4 text-center small">
       <div class="container">
@@ -91,5 +117,6 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <script src="{% static 'js/entries.js' %}"></script>
   </body>
 </html>
