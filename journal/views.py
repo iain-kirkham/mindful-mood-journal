@@ -3,6 +3,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
+from django.db.models import Q
 
 from .forms import EntryForm, GratitudeEditFormSet, GratitudeFormSet
 from .models import Entry
@@ -34,7 +35,18 @@ class EntryListView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Entry.objects.filter(user=self.request.user).prefetch_related("gratitude_items")
+        queryset = Entry.objects.filter(user=self.request.user).prefetch_related("gratitude_items")
+        search = self.request.GET.get("search", "").strip()
+        if search:
+            queryset = queryset.filter(
+                Q(title__icontains=search) | Q(content__icontains=search) | Q(mood__icontains=search)
+            )
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search"] = self.request.GET.get("search", "")
+        return context
 
 
 class EntryDetailView(LoginRequiredMixin, DetailView):
