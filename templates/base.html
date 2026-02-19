@@ -60,47 +60,66 @@
       </div>
     </nav>
 
-    <!-- ── Flash messages ── -->
-    {% if messages %}
-      <div class="container pt-3">
-        {% for message in messages %}
-          <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-
     <!-- ── Page content ── -->
     <main class="container py-4">
       {% block content %}{% endblock %}
     </main>
 
-    <!-- ── Toast notifications ── -->
-    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;" id="toastContainer">
-      {% for message in messages %}
-        <div class="toast align-items-center border-0 mb-2"
-             role="alert" aria-live="assertive" aria-atomic="true"
-             data-bs-autohide="true" data-bs-delay="4000"
-             style="
-               background-color: var(--ctp-mantle);
-               border: 1px solid {% if message.tags == 'error' %}var(--ctp-red){% else %}var(--ctp-green){% endif %} !important;
-               border-radius: 0.65rem;
-             ">
-          <div class="d-flex">
-            <div class="toast-body d-flex align-items-center gap-2" style="color: var(--ctp-text);">
-              {% if message.tags == 'error' %}
-                <span style="color: var(--ctp-red);">✕</span>
-              {% else %}
-                <span style="color: var(--ctp-green);">✔</span>
-              {% endif %}
-              {{ message }}
+    <!-- ── Toast notifications (top-center) ── -->
+    <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 9999;" id="toastContainer">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="toast border-0 mb-2 toast-{{ message.tags|default:'info' }}"
+               role="alert" aria-live="assertive" aria-atomic="true"
+               data-bs-autohide="true" data-bs-delay="4000">
+            <div class="toast-content">
+              <div class="toast-icon-wrapper">
+                {% if message.tags == 'error' or message.tags == 'danger' %}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.2"/>
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 8V12M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                {% elif message.tags == 'success' %}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.2"/>
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                    <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {% elif message.tags == 'warning' %}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 20H22L12 2Z" fill="currentColor" opacity="0.2"/>
+                    <path d="M12 3L3 19H21L12 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M12 9V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="12" cy="17" r="1" fill="currentColor"/>
+                  </svg>
+                {% else %}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.2"/>
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 8V12M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                {% endif %}
+              </div>
+              <div class="toast-text">
+                <div class="toast-title">
+                  {% if message.tags == 'error' or message.tags == 'danger' %}
+                    Error
+                  {% elif message.tags == 'success' %}
+                    Success
+                  {% elif message.tags == 'warning' %}
+                    Warning
+                  {% else %}
+                    Info
+                  {% endif %}
+                </div>
+                <div class="toast-message">{{ message }}</div>
+              </div>
+              <button type="button" class="btn-close toast-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <button type="button" class="btn-close btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      {% endif %}
     </div>
 
     <!-- ── Footer ── -->
@@ -117,6 +136,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <script src="{% static 'js/toast.js' %}"></script>
     <script src="{% static 'js/entries.js' %}"></script>
   </body>
 </html>

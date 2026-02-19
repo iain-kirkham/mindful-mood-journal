@@ -14,7 +14,9 @@ class EntryCreateView(LoginRequiredMixin, View):
     def get(self, request):
         form = EntryForm()
         formset = GratitudeFormSet()
-        return render(request, "journal/entry_form.html", {"form": form, "formset": formset})
+        return render(
+            request, "journal/entry_form.html", {"form": form, "formset": formset}
+        )
 
     def post(self, request):
         form = EntryForm(request.POST)
@@ -25,8 +27,13 @@ class EntryCreateView(LoginRequiredMixin, View):
             entry.save()
             formset.instance = entry
             formset.save()
+            messages.success(request, f'Entry "{entry.title}" created successfully!')
             return redirect("journal:entry_create_success")
-        return render(request, "journal/entry_form.html", {"form": form, "formset": formset})
+        else:
+            messages.error(request, "Please correct the errors in the form.")
+        return render(
+            request, "journal/entry_form.html", {"form": form, "formset": formset}
+        )
 
 
 class EntryListView(LoginRequiredMixin, ListView):
@@ -36,15 +43,17 @@ class EntryListView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        queryset = Entry.objects.filter(user=self.request.user).prefetch_related("gratitude_items")
+        queryset = Entry.objects.filter(user=self.request.user).prefetch_related(
+            "gratitude_items"
+        )
         search = self.request.GET.get("search", "").strip()
         if search:
-                queryset = queryset.filter(
-                    Q(title__icontains=search)
-                    | Q(content__icontains=search)
-                    | Q(mood__icontains=search)
-                    | Q(gratitude_items__item_text__icontains=search)
-                ).distinct()
+            queryset = queryset.filter(
+                Q(title__icontains=search)
+                | Q(content__icontains=search)
+                | Q(mood__icontains=search)
+                | Q(gratitude_items__item_text__icontains=search)
+            ).distinct()
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -59,7 +68,9 @@ class EntryDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "entry"
 
     def get_queryset(self):
-        return Entry.objects.filter(user=self.request.user).prefetch_related("gratitude_items")
+        return Entry.objects.filter(user=self.request.user).prefetch_related(
+            "gratitude_items"
+        )
 
 
 class EntryDeleteView(LoginRequiredMixin, DeleteView):
@@ -77,7 +88,9 @@ class EntryDeleteView(LoginRequiredMixin, DeleteView):
             messages.success(self.request, f'"{entry_title}" was deleted successfully.')
             return response
         except Exception:
-            messages.error(self.request, f'Could not delete "{entry_title}". Please try again.')
+            messages.error(
+                self.request, f'Could not delete "{entry_title}". Please try again.'
+            )
             return redirect(self.success_url)
 
 
@@ -89,6 +102,23 @@ class EntryUpdateView(LoginRequiredMixin, View):
         entry = self.get_object(pk)
         form = EntryForm(instance=entry)
         formset = GratitudeEditFormSet(instance=entry)
+        return render(
+            request,
+            "journal/entry_form.html",
+            {"form": form, "formset": formset, "is_edit": True, "entry": entry},
+        )
+
+    def post(self, request, pk):
+        entry = self.get_object(pk)
+        form = EntryForm(request.POST, instance=entry)
+        formset = GratitudeEditFormSet(request.POST, instance=entry)
+        if form.is_valid() and formset.is_valid():
+            entry = form.save()
+            formset.save()
+            messages.success(request, f'Entry "{entry.title}" updated successfully!')
+            return redirect("journal:entry_detail", pk=entry.pk)
+        else:
+            messages.error(request, "Please correct the errors in the form.")
         return render(
             request,
             "journal/entry_form.html",

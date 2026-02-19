@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('#toastContainer .toast').forEach(function (toastEl) {
-    bootstrap.Toast.getOrCreateInstance(toastEl).show();
-  });
-
+  // Delete modal functionality
   var deleteModalEl = document.getElementById('deleteEntryModal');
   if (!deleteModalEl) return;
 
