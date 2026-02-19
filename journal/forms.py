@@ -1,3 +1,10 @@
+"""Forms for the journal app.
+
+Provides EntryForm for creating/editing journal entries and a compact
+GratitudeItemForm plus two formsets for creating and editing gratitude
+items attached to an Entry.
+"""
+
 from django import forms
 from django.forms import inlineformset_factory
 from django.utils import timezone
@@ -14,6 +21,12 @@ MOOD_RATING_CHOICES = [
 
 
 class EntryForm(forms.ModelForm):
+    """ModelForm for Entry used by create and update views.
+
+    The date field is rendered as a datetime-local input and defaults to
+    the current time when creating a new entry.
+    """
+
     class Meta:
         model = Entry
         fields = ["date", "mood", "mood_rating", "title", "content"]
@@ -27,11 +40,18 @@ class EntryForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # Default `date` to now for new instances to ease entry creation.
         if not self.instance.pk:
             self.fields["date"].initial = timezone.now()
 
 
 class GratitudeItemForm(forms.ModelForm):
+    """Single gratitude item form used in create/edit formsets.
+
+    Hides the visible label for compact inline rendering and keeps an
+    `aria-label` for accessibility.
+    """
+
     class Meta:
         model = GratitudeItem
         fields = ("item_text",)
@@ -40,9 +60,7 @@ class GratitudeItemForm(forms.ModelForm):
                 attrs={"aria-label": "Thing you're grateful for"}
             )
         }
-        labels = {
-            "item_text": ""
-        }
+        labels = {"item_text": ""}
 
 
 GratitudeFormSet = inlineformset_factory(
