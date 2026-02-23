@@ -10,6 +10,8 @@ from django.forms import inlineformset_factory
 from django.utils import timezone
 from .models import Entry, GratitudeItem, MOOD_CHOICES
 
+MAX_FUTURE_DAYS = 1  # allow up to 1 day ahead to accommodate timezone shifts
+
 
 MOOD_RATING_CHOICES = [
     (1, "1 - Very Poor"),
@@ -40,16 +42,45 @@ class EntryForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Default `date` to now for new instances to ease entry creation.
+        # Default date to now for new instances to ease entry creation.
         if not self.instance.pk:
             self.fields["date"].initial = timezone.now()
+
+    def clean_title(self):
+        title = self.cleaned_data.get("title", "").strip()
+        if not title:
+            raise forms.ValidationError("Title cannot be blank.")
+        return title
+
+    def clean_content(self):
+        content = self.cleaned_data.get("content", "").strip()
+        if not content:
+            raise forms.ValidationError("Content cannot be blank.")
+        return content
+
+    def clean_mood_rating(self):
+        rating = self.cleaned_data.get("mood_rating")
+        if rating is not None and not (1 <= rating <= 5):
+            raise forms.ValidationError("Mood rating must be between 1 and 5.")
+        return rating
+
+    def clean_date(self):
+        date = self.cleaned_data.get("date")
+        if date is None:
+            raise forms.ValidationError("Please enter a valid date and time.")
+        if date > timezone.now() + timezone.timedelta(days=MAX_FUTURE_DAYS):
+            raise forms.ValidationError(
+                "Entry date cannot be more than a day in the future."
+            )
+        return date
 
 
 class GratitudeItemForm(forms.ModelForm):
     """Single gratitude item form used in create/edit formsets.
 
     Hides the visible label for compact inline rendering and keeps an
-    `aria-label` for accessibility.
+    `aria-label` for accessibility.  Gratitude items are entirely optional;
+    blank rows in the formset are silently ignored.
     """
 
     class Meta:
@@ -61,6 +92,20 @@ class GratitudeItemForm(forms.ModelForm):
             )
         }
         labels = {"item_text": ""}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Mark as not required so that empty rows in the formset are skipped.
+        self.fields["item_text"].required = False
+
+    def clean_item_text(self):
+        text = self.cleaned_data.get("item_text", "").strip()
+        # Treat whitespace-only input as empty if changed, require non-empty.
+        if self.has_changed() and not text:
+            raise forms.ValidationError(
+                "Gratitude item cannot be blank. Leave the field empty to skip it."
+            )
+        return text
 
 
 GratitudeFormSet = inlineformset_factory(
