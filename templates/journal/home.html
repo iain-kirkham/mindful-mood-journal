@@ -19,15 +19,15 @@
         <div class="mt-4 d-flex gap-2">
           {% if user.is_authenticated %}
             <a class="btn btn-primary" href="{% url 'journal:entry_create' %}">New Entry</a>
-            <a class="btn btn-outline-secondary" href="{% url 'journal:entry_list' %}">My Entries</a>
+            <a class="btn btn-rose" href="{% url 'journal:entry_list' %}">My Entries</a>
           {% else %}
             <a class="btn btn-primary" href="/accounts/login/">Get Started</a>
-            <a class="btn btn-outline-secondary" href="/accounts/signup/">Create Account</a>
+            <a class="btn btn-secondary" href="/accounts/signup/">Create Account</a>
           {% endif %}
         </div>
       </div>
       <div class="col-lg-5 mt-4 mt-lg-0">
-        <div class="p-4 border rounded-3 bg-light">
+        <div class="p-4 border rounded-3 daily-prompt">
           <h2 class="h5">A gentle daily prompt</h2>
           <ul class="mt-3">
             <li>How do I feel right now?</li>
@@ -40,8 +40,7 @@
   </section>
   {% if quote %}
     <div class="mt-5 mb-2">
-      <p class="text-center text-secondary small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.08em;">Inspirational Quote</p>
-      <div class="card homepage-quote">
+      <div class="card homepage-quote daily-prompt">
         <div class="card-body">
           <blockquote class="blockquote mb-0">
             <p>{{ quote.text }}</p>

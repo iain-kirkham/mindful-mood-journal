@@ -27,10 +27,10 @@
       {% endif %}
     </div>
     <div class="card-footer d-flex gap-2">
-      <a href="{% url 'journal:entry_detail' entry.pk %}" class="btn btn-outline-secondary btn-sm">View</a>
-      <a href="{% url 'journal:entry_update' entry.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+      <a href="{% url 'journal:entry_detail' entry.pk %}" class="btn btn-rose btn-sm">View</a>
+      <a href="{% url 'journal:entry_update' entry.pk %}" class="btn btn-info btn-sm">Edit</a>
       <button type="button"
-              class="btn btn-outline-secondary btn-sm ms-auto text-danger btn-delete-entry"
+              class="btn btn-danger btn-sm ms-auto btn-delete-entry"
               data-delete-url="{% url 'journal:entry_delete' entry.pk %}"
               data-entry-title="{{ entry.title|escape }}">
         Delete
