@@ -15,6 +15,8 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     >
+    <!-- Font Awesome (icons) -->
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   </head>
   <body>
@@ -123,11 +125,26 @@
     </div>
 
     <!-- ── Footer ── -->
-    <footer class="py-3 mt-4 text-center small">
+    <footer class="py-4 mt-4">
       <div class="container">
-        <span>MoodJournal - styled with
-          <a href="https://catppuccin.com" target="_blank" rel="noopener">Catppuccin Latte</a>
-        </span>
+        <div class="footer-content">
+          <div class="footer-text">
+            <span>MoodJournal - styled with
+              <a href="https://catppuccin.com" target="_blank" rel="noopener">Catppuccin Latte</a>
+            </span>
+          </div>
+          <div class="footer-social">
+            <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
+              <i class="fa-brands fa-facebook"></i>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="mailto:hello@moodjournal.com" rel="noreferrer" aria-label="Email">
+              <i class="fa-solid fa-envelope"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
 
