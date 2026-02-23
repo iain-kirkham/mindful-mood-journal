@@ -52,7 +52,6 @@ coverage.xml
 # env
 .env
 env.py
-*.env
 
 # Translations
 *.mo
