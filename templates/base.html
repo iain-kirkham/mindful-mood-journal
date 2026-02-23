@@ -25,7 +25,7 @@
     <nav class="navbar navbar-expand-md sticky-top">
       <div class="container">
         <a class="navbar-brand" href="{% url 'journal:home' %}">
-          🌻 MoodJournal
+          MoodJournal
         </a>
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse" data-bs-target="#mainNav"
@@ -41,7 +41,7 @@
               </li>
               <li class="nav-item">
                 <a class="btn btn-primary btn-sm ms-md-2" href="{% url 'journal:entry_create' %}">
-                  + New Entry
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i>&nbsp;New Entry
                 </a>
               </li>
               <li class="nav-item">
@@ -56,6 +56,11 @@
               <li class="nav-item">
                 <a class="btn btn-primary btn-sm ms-md-2" href="/accounts/signup/">Get Started</a>
               </li>
+            {% endif %}
+            {% if user.is_authenticated %}
+              <div class="d-none d-md-flex align-items-center ms-3">
+                <span class="navbar-text">Welcome, {{ user.get_full_name|default:user.username }}</span>
+              </div>
             {% endif %}
           </ul>
         </div>

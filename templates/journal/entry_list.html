@@ -3,14 +3,33 @@
 {% block title %}My Entries — MoodJournal{% endblock %}
 
 {% block content %}
-  <div class="d-flex align-items-center justify-content-between mb-4">
+  <!-- Desktop layout (md+) - keep existing inline layout -->
+  <div class="d-none d-md-flex align-items-center justify-content-between mb-4 w-100">
     <h1 class="h3 mb-0">My Journal Entries</h1>
     <div class="d-flex align-items-center gap-2">
       <form method="get" action="" class="d-flex">
         <input type="search" name="search" class="form-control form-control-sm" placeholder="Search entries..." value="{{ search }}">
-        <button type="submit" class="btn btn-secondary btn-sm ms-2">Search</button>
+        <button type="submit" class="btn btn-secondary btn-sm ms-2" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>&nbsp;Search
+        </button>
       </form>
-      <a href="{% url 'journal:entry_create' %}" class="btn btn-primary btn-sm">+ New Entry</a>
+      <a href="{% url 'journal:entry_create' %}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus" aria-hidden="true"></i>&nbsp;New Entry</a>
+    </div>
+  </div>
+
+  <!-- Mobile layout (small screens): title + New Entry on one line, search below full-width -->
+  <div class="d-flex d-md-none flex-column mb-4 w-100">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <h1 class="h3 mb-0">My Journal Entries</h1>
+      <a href="{% url 'journal:entry_create' %}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus" aria-hidden="true"></i>&nbsp;New Entry</a>
+    </div>
+    <div>
+      <form method="get" action="" class="d-flex w-100">
+        <input type="search" name="search" class="form-control form-control-sm me-2" placeholder="Search entries..." value="{{ search }}">
+        <button type="submit" class="btn btn-secondary btn-sm" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>&nbsp;Search
+        </button>
+      </form>
     </div>
   </div>
 

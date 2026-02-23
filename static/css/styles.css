@@ -1,7 +1,7 @@
 /* Catppuccin Latte — Bootstrap 5 theme overrides — Palette: https://catppuccin.com/palette/ */
 
 :root {
-  /* ---------- Catppuccin Latte palette ---------- */
+  /* ---------- Catppuccin Latte palette (official) ---------- */
   --ctp-rosewater: #dc8a78;
   --ctp-flamingo:  #dd7878;
   --ctp-pink:      #ea76cb;
@@ -16,7 +16,7 @@
   --ctp-sapphire:  #209fb5;
   --ctp-blue:      #1e66f5;
   --ctp-lavender:  #7287fd;
-  --ctp-text:      #2f3240;
+  --ctp-text:      #4c4f69;
   --ctp-subtext1:  #5c5f77;
   --ctp-subtext0:  #6c6f85;
   --ctp-overlay2:  #7c7f93;
@@ -58,10 +58,10 @@
   --bs-border-color:       var(--ctp-surface0);
   --bs-border-radius:      0.5rem;
 
-  --bs-card-bg:            var(--ctp-mantle);
-  --bs-card-border-color:  var(--ctp-crust);
+  --bs-card-bg:            #fff;
+  --bs-card-border-color:  var(--ctp-surface0);
 
-  --bs-input-bg:           var(--ctp-base);
+  --bs-input-bg:           #fff;
   --bs-input-border-color: var(--ctp-surface0);
 
   --bs-navbar-color:       var(--ctp-subtext1);
@@ -95,7 +95,7 @@ a:hover {
 /* Navbar */
 
 .navbar {
-  background-color: var(--ctp-crust);
+  background-color: var(--ctp-mantle);
   border-bottom: 1px solid var(--ctp-surface0);
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -201,30 +201,41 @@ a:hover {
 
 /* Secondary buttons that blend with the surface */
 .btn-secondary {
-  /* Darker secondary to improve contrast while keeping Catppuccin tone */
+  /* Use overlay2 for visible contrast on white cards */
   background-color: var(--ctp-overlay2);
   border-color: var(--ctp-overlay1);
-  color: var(--ctp-base);
+  color: #fff;
 }
 .btn-secondary:hover {
   background-color: var(--ctp-overlay1);
   border-color: var(--ctp-overlay1);
-  color: var(--ctp-base);
+  color: #fff;
 }
 .btn-secondary:focus-visible {
   box-shadow: 0 0 0 0.2rem rgba(44,48,60,0.18);
+}
+
+/* Keep icon + label on the same line inside buttons */
+.btn {
+  white-space: nowrap;
+}
+.btn > i,
+.btn > .fa-solid,
+.btn .fa {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /* Rosewater accent for preview (View button) */
 .btn-rose {
   background-color: var(--ctp-rosewater);
   border-color: color-mix(in srgb, var(--ctp-rosewater) 85%, black 15%);
-  color: var(--ctp-base);
+  color: #fff;
 }
 .btn-rose:hover {
   background-color: color-mix(in srgb, var(--ctp-rosewater) 80%, black 20%);
   border-color: color-mix(in srgb, var(--ctp-rosewater) 80%, black 20%);
-  color: var(--ctp-base);
+  color: #fff;
 }
 .btn-rose:focus-visible {
   box-shadow: 0 0 0 0.2rem rgba(220,138,120,0.18);
@@ -233,35 +244,41 @@ a:hover {
 /* Cards */
 
 .card {
-  background-color: var(--ctp-mantle);
-  border: 1px solid var(--ctp-crust);
+  background-color: #fff;
+  border: 1px solid var(--ctp-surface0);
   border-radius: 0.75rem;
-  box-shadow: 0 1px 3px rgba(76, 79, 105, 0.08);
+  box-shadow: 0 1px 4px rgba(76, 79, 105, 0.06);
   transition: box-shadow 0.2s;
 }
 
 .card:hover {
-  box-shadow: 0 4px 12px rgba(76, 79, 105, 0.12);
+  box-shadow: 0 4px 14px rgba(76, 79, 105, 0.10);
 }
 
 .card-header {
-  background-color: var(--ctp-crust);
+  background-color: color-mix(in srgb, var(--ctp-rosewater) 5%, var(--ctp-mantle) 95%);
   border-bottom: 1px solid var(--ctp-surface0);
   border-radius: 0.75rem 0.75rem 0 0;
+  color: var(--ctp-text);
+}
+.card-header small,
+.card-header .text-subtext {
+  color: var(--ctp-text);
+  opacity: 0.95;
 }
 
 /* Forms & Inputs */
 
 .form-control,
 .form-select {
-  background-color: var(--ctp-base);
+  background-color: #fff;
   border-color: var(--ctp-surface0);
   color: var(--ctp-text);
 }
 
 .form-control:focus,
 .form-select:focus {
-  background-color: var(--ctp-base);
+  background-color: #fff;
   border-color: var(--ctp-lavender);
   color: var(--ctp-text);
   box-shadow: 0 0 0 0.2rem rgba(114, 135, 253, 0.25);
@@ -378,7 +395,7 @@ a:hover {
 
 /* Toast Success (Green) */
 .toast-success {
-  background-color: #eaf6ea; /* soft solid green */
+  background-color: color-mix(in srgb, var(--ctp-green) 10%, #fff 90%);
 }
 
 .toast-success .toast-icon-wrapper {
@@ -400,7 +417,7 @@ a:hover {
 /* Toast Error/Danger (Red) */
 .toast-error,
 .toast-danger {
-  background-color: #fdecea; /* soft solid red/pink */
+  background-color: color-mix(in srgb, var(--ctp-red) 10%, #fff 90%);
 }
 
 .toast-error .toast-icon-wrapper,
@@ -425,7 +442,7 @@ a:hover {
 
 /* Toast Info (Blue) */
 .toast-info {
-  background-color: #eaf3ff; /* soft solid blue */
+  background-color: color-mix(in srgb, var(--ctp-blue) 10%, #fff 90%);
 }
 
 .toast-info .toast-icon-wrapper {
@@ -446,7 +463,7 @@ a:hover {
 
 /* Toast Warning (Yellow) */
 .toast-warning {
-  background-color: #fff7e6; /* soft solid yellow */
+  background-color: color-mix(in srgb, var(--ctp-yellow) 10%, #fff 90%);
 }
 
 .toast-warning .toast-icon-wrapper {
@@ -566,8 +583,8 @@ a:hover {
 }
 
 .rating-pill.empty {
-  background-color: var(--ctp-mantle);
-  border: 1px solid var(--ctp-surface0);
+  background-color: var(--ctp-surface0);
+  border: 1px solid var(--ctp-surface1);
   opacity: 0.95;
 }
 
@@ -578,7 +595,7 @@ a:hover {
 /* Pagination */
 
 .page-link {
-  background-color: var(--ctp-mantle);
+  background-color: #fff;
   border-color: var(--ctp-surface0);
   color: var(--ctp-blue);
 }
@@ -596,14 +613,14 @@ a:hover {
 }
 
 .page-item.disabled .page-link {
-  background-color: var(--ctp-mantle);
+  background-color: var(--ctp-base);
   color: var(--ctp-overlay0);
 }
 
 /* Footer */
 
 footer {
-  background-color: var(--ctp-crust);
+  background-color: var(--ctp-mantle);
   border-top: 1px solid var(--ctp-surface0);
   color: var(--ctp-subtext0);
 }
@@ -634,8 +651,8 @@ footer {
 
 /* Modal styling */
 .ctp-modal-content {
-  background-color: var(--ctp-mantle);
-  border: 1px solid var(--ctp-crust);
+  background-color: #fff;
+  border: 1px solid var(--ctp-surface0);
   border-radius: 0.75rem;
 }
 .ctp-modal-header {
@@ -656,11 +673,11 @@ footer {
 .homepage-quote {
   max-width: 680px;
   margin: 0 auto;
-  background-color: var(--ctp-mantle);
-  border: 1px solid var(--ctp-crust);
+  background-color: #fff;
+  border: 1px solid var(--ctp-surface0);
   border-left: 4px solid var(--ctp-mauve);
   border-radius: 0.75rem;
-  box-shadow: 0 4px 18px rgba(136, 57, 239, 0.10);
+  box-shadow: 0 2px 12px rgba(136, 57, 239, 0.08);
 }
 .homepage-quote .card-body {
   padding: 1.5rem 1.75rem;
@@ -705,10 +722,10 @@ footer {
   }
 }
 
-/* Daily prompt (homepage) — subtle flamingo background */
+/* Daily prompt (homepage) — subtle flamingo tint on white */
 .daily-prompt {
-  background-color: color-mix(in srgb, var(--ctp-flamingo) 8%, var(--ctp-base) 92%);
-  border: 1px solid color-mix(in srgb, var(--ctp-flamingo) 14%, var(--ctp-crust) 86%);
+  background-color: color-mix(in srgb, var(--ctp-flamingo) 6%, #fff 94%);
+  border: 1px solid color-mix(in srgb, var(--ctp-flamingo) 12%, var(--ctp-surface0) 88%);
   color: var(--ctp-text);
 }
 .daily-prompt h2 {
@@ -721,7 +738,7 @@ footer {
 /* Footer */
 
 footer {
-  background-color: var(--ctp-crust);
+  background-color: var(--ctp-mantle);
   border-top: 1px solid var(--ctp-surface0);
   margin-top: auto;
 }
@@ -750,7 +767,7 @@ footer {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  background-color: var(--ctp-mantle);
+  background-color: var(--ctp-base);
   color: var(--ctp-subtext1);
   font-size: 1.25rem;
   transition: all 0.2s ease;
