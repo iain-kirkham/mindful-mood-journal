@@ -73,7 +73,13 @@
 
 body {
   font-family: "Montserrat", "Inter", "Segoe UI", system-ui, sans-serif;
-  background-color: var(--ctp-base);
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--ctp-mauve) 14%, var(--ctp-base) 86%) 0%,
+    color-mix(in srgb, var(--ctp-lavender) 16%, var(--ctp-base) 84%) 35%,
+    color-mix(in srgb, var(--ctp-sky) 10%, var(--ctp-base) 90%) 70%,
+    var(--ctp-base) 100%
+  );
   color: var(--ctp-text);
   min-height: 100vh;
   display: flex;
@@ -95,7 +101,13 @@ a:hover {
 /* Navbar */
 
 .navbar {
-  background-color: var(--ctp-mantle);
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--ctp-mauve) 28%, var(--ctp-base) 72%) 0%,
+    color-mix(in srgb, var(--ctp-pink) 24%, var(--ctp-base) 76%) 35%,
+    color-mix(in srgb, var(--ctp-flamingo) 22%, var(--ctp-base) 78%) 70%,
+    color-mix(in srgb, var(--ctp-rosewater) 26%, var(--ctp-base) 74%) 100%
+  );
   border-bottom: 1px solid var(--ctp-surface0);
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -103,27 +115,35 @@ a:hover {
 
 .navbar-brand {
   font-weight: 700;
-  color: var(--ctp-mauve);
+  color: color-mix(in srgb, var(--ctp-text) 88%, black 12%);
   letter-spacing: -0.02em;
 }
 
 .navbar-brand:hover {
-  color: var(--ctp-lavender);
+  color: color-mix(in srgb, var(--ctp-sky) 70%, var(--ctp-base) 30%);
 }
 
 .nav-link {
-  color: var(--ctp-subtext1);
+  color: color-mix(in srgb, var(--ctp-text) 88%, black 12%);
   font-weight: 500;
   transition: color 0.15s;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: var(--ctp-blue);
+  color: var(--ctp-sky);
+}
+
+.navbar .navbar-text {
+  color: color-mix(in srgb, var(--ctp-text) 88%, black 12%);
 }
 
 .navbar-toggler {
-  border-color: var(--ctp-surface0);
+  border-color: color-mix(in srgb, var(--ctp-base) 50%, transparent 50%);
+}
+
+.navbar-toggler-icon {
+  filter: brightness(0) invert(1);
 }
 
 /* Buttons */
@@ -140,6 +160,26 @@ a:hover {
 }
 .btn-primary:focus-visible {
   box-shadow: 0 0 0 0.2rem rgba(30, 102, 245, 0.35);
+}
+
+
+.btn-myentries {
+  background-color: var(--ctp-sky);
+  border: 1px solid var(--ctp-surface0);
+  color: var(--ctp-base);
+  padding: 0.45rem 0.9rem;
+}
+.btn-myentries:hover {
+  background-color: color-mix(in srgb, var(--ctp-sky) 86%, var(--ctp-base) 14%);
+  color: var(--ctp-base);
+  border-color: var(--ctp-surface0);
+}
+
+
+.btn-myentries:focus,
+.btn-myentries:active,
+.btn-myentries:focus-visible {
+  border-color: var(--ctp-surface0);
 }
 
 .btn-outline-secondary {
@@ -226,20 +266,7 @@ a:hover {
   vertical-align: middle;
 }
 
-/* Rosewater accent for preview (View button) */
-.btn-rose {
-  background-color: var(--ctp-rosewater);
-  border-color: color-mix(in srgb, var(--ctp-rosewater) 85%, black 15%);
-  color: #fff;
-}
-.btn-rose:hover {
-  background-color: color-mix(in srgb, var(--ctp-rosewater) 80%, black 20%);
-  border-color: color-mix(in srgb, var(--ctp-rosewater) 80%, black 20%);
-  color: #fff;
-}
-.btn-rose:focus-visible {
-  box-shadow: 0 0 0 0.2rem rgba(220,138,120,0.18);
-}
+/* Removed .btn-rose (rosewater accent) — Create Account button removed from templates */
 
 /* Cards */
 
@@ -620,7 +647,13 @@ a:hover {
 /* Footer */
 
 footer {
-  background-color: var(--ctp-mantle);
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--ctp-mauve) 28%, var(--ctp-base) 72%) 0%,
+    color-mix(in srgb, var(--ctp-pink) 24%, var(--ctp-base) 76%) 35%,
+    color-mix(in srgb, var(--ctp-flamingo) 22%, var(--ctp-base) 78%) 70%,
+    color-mix(in srgb, var(--ctp-rosewater) 26%, var(--ctp-base) 74%) 100%
+  );
   border-top: 1px solid var(--ctp-surface0);
   color: var(--ctp-subtext0);
 }
@@ -738,7 +771,13 @@ footer {
 /* Footer */
 
 footer {
-  background-color: var(--ctp-mantle);
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--ctp-mauve) 28%, var(--ctp-base) 72%) 0%,
+    color-mix(in srgb, var(--ctp-pink) 24%, var(--ctp-base) 76%) 35%,
+    color-mix(in srgb, var(--ctp-flamingo) 22%, var(--ctp-base) 78%) 70%,
+    color-mix(in srgb, var(--ctp-rosewater) 26%, var(--ctp-base) 74%) 100%
+  );
   border-top: 1px solid var(--ctp-surface0);
   margin-top: auto;
 }
@@ -749,6 +788,7 @@ footer {
   align-items: center;
   gap: 0.75rem;
   text-align: center;
+  width: 100%;
 }
 
 .footer-social {
@@ -756,8 +796,8 @@ footer {
   align-items: center;
   justify-content: center;
   gap: 2.5rem;
-  width: 100%;
-  max-width: 360px;
+  width: auto;
+  max-width: none;
 }
 
 .footer-social a {
@@ -767,41 +807,81 @@ footer {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  background-color: var(--ctp-base);
-  color: var(--ctp-subtext1);
+  background-color: color-mix(in srgb, var(--ctp-base) 92%, transparent 8%);
+  color: var(--ctp-mauve);
   font-size: 1.25rem;
   transition: all 0.2s ease;
-  border: 1px solid var(--ctp-surface0);
+  border: 1px solid color-mix(in srgb, var(--ctp-base) 70%, transparent 30%);
 }
 
 .footer-social a:hover {
-  background-color: var(--ctp-blue);
-  color: var(--ctp-base);
-  border-color: var(--ctp-blue);
+  background-color: var(--ctp-base);
+  color: var(--ctp-pink);
+  border-color: color-mix(in srgb, var(--ctp-base) 82%, transparent 18%);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(30, 102, 245, 0.2);
+  box-shadow: 0 4px 12px rgba(136, 57, 239, 0.22);
 }
 
 .footer-text {
   font-size: 0.875rem;
-  color: var(--ctp-subtext0);
+  color: color-mix(in srgb, var(--ctp-text) 88%, black 12%);
 }
 
 .footer-text a {
-  color: var(--ctp-blue);
+  color: color-mix(in srgb, var(--ctp-text) 88%, black 12%);
   text-decoration: none;
   font-weight: 500;
 }
 
 .footer-text a:hover {
-  color: var(--ctp-lavender);
+  color: var(--ctp-sky);
   text-decoration: underline;
 }
 
-@media (min-width: 768px) {
-  /* Keep icons on their own centered line; keep text above */
+@media (max-width: 767.98px) {
   .footer-content {
     flex-direction: column;
     align-items: center;
+    text-align: center;
+  }
+
+  .footer-text {
+    order: 1;
+  }
+
+  .footer-social {
+    order: 2;
+  }
+}
+
+@media (min-width: 992px) {
+  footer .container {
+    max-width: 100%;
+    width: 100%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+
+  .footer-text {
+    text-align: left;
+  }
+
+  .footer-social {
+    margin-left: auto;
+    justify-content: flex-end;
+  }
+}
+ }
+
+  .footer-social {
+    margin-left: auto;
+    justify-content: flex-end;
   }
 }
