@@ -3,6 +3,8 @@
 
 {% block title %}{% if is_edit %}Edit Entry{% else %}New Entry{% endif %} — MoodJournal{% endblock %}
 
+{% block meta_description %}{% if is_edit %}Edit your journal entry — update the mood, content, and gratitude notes.{% else %}Create a new journal entry — record your mood, rate your day, and note three things you are grateful for.{% endif %}{% endblock %}
+
 {% block content %}
   <div class="row justify-content-center">
     <div class="col-lg-8">
