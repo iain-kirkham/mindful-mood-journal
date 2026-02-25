@@ -139,11 +139,11 @@ a:hover {
 }
 
 .navbar-toggler {
-  border-color: color-mix(in srgb, var(--ctp-base) 50%, transparent 50%);
+  border-color: rgba(0, 0, 0, 0.55);
 }
 
 .navbar-toggler-icon {
-  filter: brightness(0) invert(1);
+  filter: brightness(0);
 }
 
 /* Buttons */
