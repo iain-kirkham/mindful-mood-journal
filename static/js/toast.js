@@ -102,4 +102,3 @@ const ToastManager = {
 
 document.addEventListener('DOMContentLoaded', () => ToastManager.init());
 window.ToastManager = ToastManager;
-    this.container.appendChild(toastEl);
