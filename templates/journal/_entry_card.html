@@ -21,7 +21,7 @@
       {% if entry.gratitude_items.all %}
         <ul class="list-unstyled gratitude-list mt-2 mb-0 small">
           {% for item in entry.gratitude_items.all %}
-            <li>✦ {{ item.item_text }}</li>
+            <li><i class="fa-solid fa-star me-2" aria-hidden="true"></i>{{ item.item_text }}</li>
           {% endfor %}
         </ul>
       {% endif %}

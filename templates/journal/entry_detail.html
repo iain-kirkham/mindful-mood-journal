@@ -41,9 +41,9 @@
           {% if entry.gratitude_items.all %}
             <hr style="border-color: var(--ctp-surface0);">
             <h5 class="mb-3">Grateful for</h5>
-            <ul class="gratitude-list ps-3">
+            <ul class="list-unstyled gratitude-list ps-3">
               {% for item in entry.gratitude_items.all %}
-                <li>{{ item.item_text }}</li>
+                <li><i class="fa-solid fa-star me-2" aria-hidden="true"></i>{{ item.item_text }}</li>
               {% endfor %}
             </ul>
           {% endif %}
