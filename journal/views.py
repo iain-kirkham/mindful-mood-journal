@@ -16,7 +16,12 @@ from django.db.models import Q
 from django.db import transaction
 from django.contrib import messages
 
-from .forms import EntryForm, GratitudeEditFormSet, GratitudeFormSet
+from .forms import (
+    EntryForm,
+    GratitudeEditFormSet,
+    GratitudeFormSet,
+    make_gratitude_edit_formset,
+)
 from .models import Entry, Quote
 
 
@@ -183,7 +188,10 @@ class EntryUpdateView(LoginRequiredMixin, View):
         """Render form populated with existing entry and gratitude items."""
         entry = self.get_object(pk)
         form = EntryForm(instance=entry)
-        formset = GratitudeEditFormSet(instance=entry)
+        existing_count = entry.gratitude_items.count()
+        extra = max(0, 3 - existing_count)
+        EditFormSet = make_gratitude_edit_formset(extra=extra)
+        formset = EditFormSet(instance=entry)
         return render(
             request,
             "journal/entry_form.html",

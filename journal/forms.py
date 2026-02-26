@@ -115,3 +115,14 @@ GratitudeFormSet = inlineformset_factory(
 GratitudeEditFormSet = inlineformset_factory(
     Entry, GratitudeItem, form=GratitudeItemForm, extra=0, can_delete=False
 )
+
+
+def make_gratitude_edit_formset(extra=0):
+    """Return a GratitudeItem edit formset class with a dynamic extra count.
+
+    Used by the edit view to ensure the minimum visible boxes is always 3
+    regardless of how many gratitude items the entry already has.
+    """
+    return inlineformset_factory(
+        Entry, GratitudeItem, form=GratitudeItemForm, extra=extra, can_delete=False
+    )
