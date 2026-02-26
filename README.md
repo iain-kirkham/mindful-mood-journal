@@ -4,18 +4,16 @@ A personal mood and gratitude journaling web application built with Django. User
 
 ---
 
-## Table of Contents
+# Table of Contents
 
 - [MoodJournal](#moodjournal)
-  - [Table of Contents](#table-of-contents)
+- [Table of Contents](#table-of-contents)
 - [Purpose of project](#purpose-of-project)
 - [User Experience Design](#user-experience-design)
   - [Typography and Fonts used](#typography-and-fonts-used)
   - [Color Palette](#color-palette)
 - [Wireframes](#wireframes)
-  - [Mobile Wireframes](#mobile-wireframes)
-  - [Tablet Wireframes](#tablet-wireframes)
-  - [Desktop Wireframes](#desktop-wireframes)
+  - [Colour Palette \& Swatches](#colour-palette--swatches)
 - [User Stories](#user-stories)
 - [Features](#features)
 - [Entity Relationship Diagram (ERD)](#entity-relationship-diagram-erd)
@@ -40,70 +38,270 @@ MoodJournal provides a simple, private space for daily reflection. The applicati
 The application uses **Montserrat** from Google Fonts as the primary typeface, with `Inter`, `Segoe UI`, and `system-ui` as fallbacks. Montserrat was chosen for its clean geometric style which suits a calm, minimal journaling interface. The font is loaded via a `<link rel="preload">` tag to minimise layout shift.
 
 ## Color Palette
-The UI is themed using the Catppuccin Latte palette — a warm, low‑contrast light theme for calm reflection. Additional accents used across the app (homepage, edit actions, form surfaces, muted text, and focus states) are listed below.
+The UI is themed using the Catppuccin Latte palette — a warm, low‑contrast light theme for calm reflection. Every colour used across the app (links, navigation, buttons, mood badges, alerts, focus states, and surfaces) is listed below.
 
 ![Colour swatches](readme/colour-swatch.png)
 
-| Role                    | Name      | Hex       |
-| ----------------------- | --------- | --------- |
-| Primary / links         | Blue      | `#1e66f5` |
-| Brand / logo            | Mauve     | `#8839ef` |
-| Link hover              | Lavender  | `#7287fd` |
-| Homepage accent         | Rosewater | `#f5e0dc` |
-| Edit / action buttons   | Peach     | `#f5a97f` |
-| Success                 | Green     | `#40a02b` |
-| Danger                  | Red       | `#d20f39` |
-| Warning                 | Yellow    | `#df8e1d` |
-| Info / secondary        | Sky       | `#89b4fa` |
-| Body text               | Text      | `#4c4f69` |
-| Muted / secondary text  | Subtext0  | `#6c6f85` |
-| Navbar background       | Mantle    | `#e6e9ef` |
-| Card / border           | Surface 0 | `#ccd0da` |
-| Form / input background | Surface 1 | `#e9edf2` |
-| Overlay / focus state   | Overlay 0 | `#b6bac6` |
-| Page background         | Base      | `#ffffff` |
+| Role                        | Name      | Hex       |
+| --------------------------- | --------- | --------- |
+| Primary / links             | Blue      | `#1e66f5` |
+| Brand / logo                | Mauve     | `#8839ef` |
+| Link hover / focus rings    | Lavender  | `#7287fd` |
+| Navbar / footer gradient    | Pink      | `#ea76cb` |
+| Navbar / footer gradient    | Flamingo  | `#dd7878` |
+| View buttons / card accent  | Rosewater | `#dc8a78` |
+| Danger buttons              | Maroon    | `#e64553` |
+| Danger hover                | Red       | `#d20f39` |
+| Excited mood badge          | Peach     | `#fe640b` |
+| Warning / mood rating       | Yellow    | `#df8e1d` |
+| Success / gratitude markers | Green     | `#40a02b` |
+| Info / calm mood            | Teal      | `#179299` |
+| Nav active / action button  | Sky       | `#04a5e5` |
+| Body text                   | Text      | `#4c4f69` |
+| Labels / secondary text     | Subtext 1 | `#5c5f77` |
+| Muted / footer text         | Subtext 0 | `#6c6f85` |
+| Secondary buttons           | Overlay 2 | `#7c7f93` |
+| Neutral mood badge          | Overlay 1 | `#8c8fa1` |
+| Placeholders / disabled     | Overlay 0 | `#9ca0b0` |
+| Outline button borders      | Surface 1 | `#bcc0cc` |
+| Borders / dividers          | Surface 0 | `#ccd0da` |
+| Light backgrounds           | Mantle    | `#e6e9ef` |
+| Utility background          | Crust     | `#dce0e8` |
+| Page background             | Base      | `#ffffff` |
 
 ---
 
 # Wireframes
 
-## Mobile Wireframes
+![Logged out](readme/logged-out.png)
 
-## Tablet Wireframes
+*Public home (logged-out): calming quote and clear sign‑in / sign‑up actions.*
 
-## Desktop Wireframes
+![Logged in](readme/logged-in.png)
+
+*Authenticated dashboard: quick-create, recent entries, and personalised greeting.*
+
+![Create Entry](readme/create-entry.png)
+
+*Create entry form (mobile/tablet): mood selector, rating, title, content, and up to 3 gratitude items.*
+
+![Edit page](readme/edit-page.png)
+
+*Edit entry form with fields pre-filled and save / cancel actions.*
+
+![Details page](readme/details-page.png)
+
+*Entry detail view showing mood, rating, full content, date, and gratitude items.*
+
+![New board 1](readme/new-board-1.png)
+
+*Desktop entry list: responsive card grid with search, filters, and bulk actions.*
+
+## Colour Palette & Swatches
+
+![Colours](readme/colours.png)  ![Colour swatches](readme/colour-swatch.png)
 
 ---
 
 # User Stories
 
-| #   | As a…   | I want to…                                                              | So that…                                            |
-| --- | ------- | ----------------------------------------------------------------------- | --------------------------------------------------- |
-| 1   | Visitor | Register for an account                                                 | I can start keeping a private journal               |
-| 2   | Visitor | Sign in to my account                                                   | I can access my existing entries                    |
-| 3   | User    | Create a new journal entry with a title, mood, mood rating, and content | I can record how I am feeling each day              |
-| 4   | User    | Add up to 3 optional gratitude items to an entry                        | I can reflect on positive moments alongside my mood |
-| 5   | User    | View a paginated list of all my past entries                            | I can browse my journal history                     |
-| 6   | User    | Search my entries by title, content, mood, or gratitude text            | I can quickly find a specific entry                 |
-| 7   | User    | View the full detail of a single entry                                  | I can re-read what I wrote                          |
-| 8   | User    | Edit an existing entry and its gratitude items                          | I can correct or update my record                   |
-| 9   | User    | Delete an entry after confirming                                        | I can remove entries I no longer want to keep       |
-| 10  | User    | See a random inspirational quote on the home page                       | I feel encouraged before I start writing            |
-| 11  | User    | Sign out securely                                                       | My journal remains private                          |
+1. User registration (Must)
+As a visitor, I want to register with a username, and password so that I can create my own journals.
 
----
+Acceptance Criteria:
 
-# Features
+  Form requires unique username and valid email (optional) format.
+  Passwords must be validated for security.
+  Successful registration automatically logs the user in or redirects to dashboard.
 
-- **Home page** — Hero section with a daily reflection prompt and a randomly selected inspirational quote.
-- **User authentication** — Registration, login, and logout powered by `django-allauth`. All entry views require login; users can only access their own data.
-- **Create entry** — Form with date/time picker, mood selector (8 choices), 1–5 mood rating, title, freeform content, and an optional inline formset for up to 3 gratitude items. Entry and gratitude items are saved inside a database transaction so no orphaned data is created on validation failure.
-- **Entry list** — Paginated (10 per page) card grid of all entries sorted by date descending, with a responsive search bar filtering across title, content, mood, and gratitude text.
-- **Entry detail** — Full view of a single entry including all gratitude items.
-- **Edit entry** — Pre-populated form to update any field and manage existing gratitude items.
-- **Delete entry** — Confirmation page before permanent deletion, with a dismissible modal for inline deletion from the list view.
-- **Toast notifications** — Auto-dismissing Bootstrap toast messages confirm successful create, update, and delete actions, and highlight validation errors.
-- **Responsive layout** — Bootstrap 5 grid with separate mobile and desktop layouts for the entry list header and navigation.
+2. User Login (Must)
+As a registered user, I want to login to my account so that I can access my journal entries.
+
+Acceptance Criteria:
+
+  Secure authentication via Allauth.
+  Error messages appear for invalid credentials.
+
+3. User Logout (Must)
+As a logged in user, I want to log out so that my data remains private on shared devices.
+
+Acceptance Criteria:
+
+# User Stories
+
+1. User registration (Must)
+    As a visitor, I want to register with a username and password so that I can create my own journals.
+
+    Acceptance Criteria:
+    - Form requires unique username and valid email (optional) format.
+    - Passwords must be validated for security.
+    - Successful registration automatically logs the user in or redirects to dashboard.
+
+2. User login (Must)
+    As a registered user, I want to login to my account so that I can access my journal entries.
+
+    Acceptance Criteria:
+    - Secure authentication via Allauth.
+    - Error messages appear for invalid credentials.
+
+3. User logout (Must)
+    As a logged in user, I want to log out so that my data remains private on shared devices.
+
+    Acceptance Criteria:
+    - Session is destroyed on logout.
+    - The user is redirected to the homepage.
+
+4. Conditional navigation bar (Must)
+    As a user, I want to see a dynamic menu so that I know if I am logged in or out.
+
+    Acceptance Criteria:
+    - Authenticated: show "New Entry", "My Entries", "Logout".
+    - Not logged in: show "Login", "Register".
+
+5. Create entry (Must)
+    As a user, I want to create an entry with date, mood, mood rating, title, and content so that I can track my mental wellness.
+
+    Acceptance Criteria:
+    - Title text field.
+    - Mood selection.
+    - Rating scale (1-5).
+    - Content text field.
+
+6. Gratitude items (Optional)
+    As a user, I want optionally add up to three gratitude items to an entry so that I can practice gratitude and positivity.
+
+    Acceptance Criteria:
+    - Gratitude items are linked to a specific Entry ID.
+
+7. Entry list (Must)
+    As a user, I want to see a list of my entries so that I can review my journal history.
+
+    Acceptance Criteria:
+    - Entries are paginated to 10 per page.
+    - Next and previous page links when entries are over 10.
+
+8. Entry detail (Must)
+    As a user, I want to see the full details of an entry so that I can read my past reflections.
+
+    Acceptance Criteria:
+    - Shows all fields with the list of gratitude items.
+
+9. Edit entry (Must)
+    As a user, I want to edit an existing entry so that I can update my journal if I made a mistake or need to backdate.
+
+    Acceptance Criteria:
+    - User can change any field of their own entries.
+
+10. Delete entry (Must)
+    As a user, I want to delete an entry with confirmation so that I can remove unwanted content safely.
+
+    Acceptance Criteria:
+    - User is able to delete an Entry with a button.
+    - Requires a "Confirm Delete" step.
+    - User gets successful delete confirmation.
+
+11. Search entries (Must)
+    As a user, I want to search by title, content, mood, or gratitude items so that I can find specific memories or track trends.
+
+    Acceptance Criteria:
+    - Search bar is present on the entry list page.
+    - Results update upon search to show matching entries.
+
+12. Filter entries (Must)
+    As a user, I want to filter by mood or date range so that I can see patterns in my data.
+
+    Acceptance Criteria:
+    - Dropdown menu allows selection of one of the mood types.
+    - Date pickers allow selecting a "Start" and "End" date.
+    - Filters can be combined (e.g. "Sad" entries from "last week").
+
+13. Random quote (Want)
+    As a user, I want to see a random quote on the homepage so that I feel motivated.
+
+    Acceptance Criteria:
+    - A new quote is displayed every time the dashboard is loaded.
+    - The author is displayed alongside the text.
+
+14. Mobile-friendly (Must)
+    As a user, I want a mobile-friendly site so that I can journal on the go.
+
+    Acceptance Criteria:
+    - Nav bar collapses into a hamburger menu on mobile.
+    - Form fields take up full width on small screens.
+
+15. Success/error messages (Must)
+    As a user, I want success/error messages so that I know my data saved correctly.
+
+    Acceptance Criteria:
+    - Display messages appear after saving, editing, or deleting an entry.
+    - Messages are color-coded (Green for success, Red for error).
+
+16. Privacy: own entries (Must)
+    As a user, I want to only see my own entries so that my journal is private.
+
+    Acceptance Criteria:
+    - Users cannot view an Entry if it belongs to another user (returns 404).
+
+17. Mood calendars & charts (Want)
+    As a user, I want mood calendars and charts so that I can see emotional trends.
+
+    Acceptance Criteria:
+    - Dashboard displays a line chart of mood ratings over the last 30 days.
+
+18. Dark mode toggle (Want)
+    As a user, I want a dark mode toggle so that I can journal comfortably at night.
+
+    Acceptance Criteria:
+    - A toggle switch in the navbar or profile page.
+    - Selection is saved to the user's session or profile model.
+
+19. Admin panel (Must)
+    As an admin, I want to use the Django Admin panel so that I can manage users and quotes.
+
+    Acceptance Criteria:
+    - Admin can create, read, update, and delete (CRUD) all quotes and entries.
+    - Entries are searchable in the admin panel by user.
+
+20. Backdate entry (Want)
+    As a user, I want to select a date in the past for my entry so that I can catch up on days I forgot to journal.
+
+    Acceptance Criteria:
+    - The "Date" field in the form allows for manual selection (Datepicker).
+    - Defaults to "Today" but remains editable.
+
+21. Password reset (Must)
+    As a user, I want to reset my password via email if I forget it so that I don't lose access to my private journal.
+
+    Acceptance Criteria:
+    - "Forgot Password" link on the login page.
+    - User receives a secure token link via email.
+
+22. Export CSV (Want)
+    As a user, I want to export my entries to a CSV file so that I have a permanent backup of my reflections.
+
+    Acceptance Criteria:
+    - A "Download CSV" button exists on the profile or list page.
+    - The file includes Date, Title, Mood, Content and Gratitude items.
+    - Only the user's own data is exported.
+
+23. Toast notifications (Want)
+    As a user, I want to see unobtrusive toast notifications for actions like saving or deleting so that I get immediate feedback without breaking my visual flow.
+
+    Acceptance Criteria:
+    - Toasts appear in a consistent corner of the screen (e.g., top-right).
+    - Toasts are color-coded: Success (Green), Error (Red), Info (Blue).
+    - Toasts automatically disappear after 3–5 seconds or can be dismissed manually.
+    - The system handles multiple toasts if actions happen in quick succession.
+
+24. Modal edit form (Want)
+    As a user, I want to open and submit an edit form within a modal overlay, so that I can update my entries without losing my place in the list view or waiting for a full page reload.
+
+    Acceptance Criteria:
+    - Clicking the "Edit" button on a note card launches a Bootstrap modal.
+    - Submitting the form updates the database and reflects the changes on the main list view immediately.
+    - The modal closes automatically upon a successful save.
+    - Validation errors (e.g. missing required fields) are displayed inside the modal without closing the overlay.
+    - The background scroll position is preserved after the modal is closed.
 
 ---
 
