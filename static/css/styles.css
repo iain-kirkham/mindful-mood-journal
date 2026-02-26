@@ -182,6 +182,22 @@ a:hover {
   border-color: var(--ctp-surface0);
 }
 
+/* Rosewater accent button used for "View" actions in entry cards */
+.btn-rose {
+  background-color: var(--ctp-rosewater);
+  border-color: var(--ctp-rosewater) ;
+  background-image: none;
+  color: #fff;
+}
+.btn-rose:hover {
+  background-color: color-mix(in srgb, var(--ctp-rosewater) 86%, var(--ctp-base) 14%);
+  border-color: color-mix(in srgb, var(--ctp-rosewater) 86%, var(--ctp-base) 14%);
+  color: #fff;
+}
+.btn-rose:focus-visible {
+  box-shadow: 0 0 0 0.2rem rgba(220,138,120,0.22);
+}
+
 .btn-outline-secondary {
   color: var(--ctp-subtext1);
   border-color: var(--ctp-surface1);
