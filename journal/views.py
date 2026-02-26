@@ -97,7 +97,7 @@ class EntryListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         """Filter entries for current user and apply optional search.
 
-        Uses prefetch_related for gratitude_items to minimize database queries.
+        Uses prefetch_related for gratitude_items to minimise database queries.
         Search term is matched against title, content, mood, and gratitude text.
         """
         queryset = Entry.objects.filter(user=self.request.user).prefetch_related(

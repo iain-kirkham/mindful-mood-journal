@@ -118,11 +118,6 @@ class Quote(models.Model):
     """A short inspirational quote displayed on the home page.
 
     The author field is optional and may be blank.
-    """
-
-    """A short inspirational quote displayed on the home page.
-
-    The author field is optional and may be blank.
 
     Database constraints:
         - `text` must not be an empty string
