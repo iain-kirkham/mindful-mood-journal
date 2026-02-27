@@ -150,12 +150,12 @@ a:hover {
 
 .btn-primary {
   background-color: var(--ctp-blue);
-  border-color: var(--ctp-blue);
+  border-color: transparent;
   color: #fff;
 }
 .btn-primary:hover {
   background-color: var(--ctp-lavender);
-  border-color: var(--ctp-lavender);
+  border-color: transparent;
   color: #fff;
 }
 .btn-primary:focus-visible {
@@ -185,13 +185,13 @@ a:hover {
 /* Rosewater accent button used for "View" actions in entry cards */
 .btn-rose {
   background-color: var(--ctp-rosewater);
-  border-color: var(--ctp-rosewater) ;
+  border-color: transparent;
   background-image: none;
   color: #fff;
 }
 .btn-rose:hover {
   background-color: color-mix(in srgb, var(--ctp-rosewater) 86%, var(--ctp-base) 14%);
-  border-color: color-mix(in srgb, var(--ctp-rosewater) 86%, var(--ctp-base) 14%);
+  border-color: transparent;
   color: #fff;
 }
 .btn-rose:focus-visible {
@@ -211,42 +211,42 @@ a:hover {
 .btn-danger {
   /* Delete / destructive actions: use Catppuccin maroon for prominence */
   background-color: var(--ctp-maroon);
-  border-color: var(--ctp-maroon);
+  border-color: transparent;
   color: #fff;
 }
 .btn-danger:hover {
   /* on hover move to brighter red to emphasise action */
   background-color: var(--ctp-red);
-  border-color: var(--ctp-red);
+  border-color: transparent;
   color: #fff;
 }
 
 .btn-success {
   background-color: var(--ctp-green);
-  border-color: var(--ctp-green);
+  border-color: transparent;
   color: #fff;
 }
 
 /* Warning / cautious actions */
 .btn-warning {
   background-color: var(--ctp-yellow);
-  border-color: var(--ctp-yellow);
+  border-color: transparent;
   color: #2b2b2b;
 }
 .btn-warning:hover {
   background-color: color-mix(in srgb, var(--ctp-yellow) 80%, black 20%);
-  border-color: color-mix(in srgb, var(--ctp-yellow) 80%, black 20%);
+  border-color: transparent;
 }
 
 /* Informational actions */
 .btn-info {
   background-color: var(--ctp-teal);
-  border-color: var(--ctp-teal);
+  border-color: transparent;
   color: #fff;
 }
 .btn-info:hover {
   background-color: color-mix(in srgb, var(--ctp-teal) 80%, black 20%);
-  border-color: color-mix(in srgb, var(--ctp-teal) 80%, black 20%);
+  border-color: transparent;
   color: #fff;
 }
 .btn-info:focus-visible {
@@ -264,7 +264,7 @@ a:hover {
 }
 .btn-secondary:hover {
   background-color: var(--ctp-overlay1);
-  border-color: var(--ctp-overlay1);
+  border-color: transparent;
   color: #fff;
 }
 .btn-secondary:focus-visible {
@@ -651,7 +651,7 @@ a:hover {
 
 .page-item.active .page-link {
   background-color: var(--ctp-blue);
-  border-color: var(--ctp-blue);
+  border-color: transparent;
   color: #fff;
 }
 
@@ -888,13 +888,6 @@ footer {
   .footer-text {
     text-align: left;
   }
-
-  .footer-social {
-    margin-left: auto;
-    justify-content: flex-end;
-  }
-}
- }
 
   .footer-social {
     margin-left: auto;
