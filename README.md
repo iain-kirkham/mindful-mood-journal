@@ -2,11 +2,13 @@
 
 A personal mood and gratitude journaling web application built with Django. Users can record daily journal entries, track their mood, rate their day, and list things they are grateful for — all in a calm, distraction-free interface.
 
+The project can be viewed here - [Live link](https://mindful-mood-journal-ca071333a6dc.herokuapp.com/)
 ---
 
 # Table of Contents
 
 - [MoodJournal](#moodjournal)
+  - [The project can be viewed here - Live link](#the-project-can-be-viewed-here---live-link)
 - [Table of Contents](#table-of-contents)
 - [Purpose of project](#purpose-of-project)
 - [User Experience Design](#user-experience-design)
@@ -18,15 +20,21 @@ A personal mood and gratitude journaling web application built with Django. User
   - [Should Have](#should-have)
   - [Could Have](#could-have)
 - [Entity Relationship Diagram (ERD)](#entity-relationship-diagram-erd)
+- [Features](#features)
 - [Testing](#testing)
 - [Bugs](#bugs)
+  - [Gratitude Entries not appearing in edit](#gratitude-entries-not-appearing-in-edit)
+  - [Pywin32 dependency](#pywin32-dependency)
+  - [Toast manager script undefined element](#toast-manager-script-undefined-element)
 - [Deployment](#deployment)
 - [Technologies used](#technologies-used)
   - [Backend](#backend)
   - [Frontend](#frontend)
   - [Testing \& Development](#testing--development)
   - [Deployment \& Infrastructure](#deployment--infrastructure)
-- [Development Process](#development-process)
+- [AI Usage](#ai-usage)
+- [Future Improvements](#future-improvements)
+- [Credits](#credits)
 
 ---
 
@@ -42,8 +50,10 @@ MoodJournal provides a simple, private space for daily reflection. The applicati
 
 The application uses **Montserrat** from Google Fonts as the primary typeface, with `Inter`, `Segoe UI`, and `system-ui` as fallbacks. Montserrat was chosen for its clean geometric style which suits a calm, minimal journaling interface. The font is loaded via a `<link rel="preload">` tag to minimise layout shift.
 
+FontAwesome is also used to provide the icons, these help to hint to the user what to do in some user actions such as search and new post, in addition to this they are used in the footer for the social icons.
+
 ## Color Palette
-The UI is themed using the Catppuccin Latte palette — a warm, low‑contrast light theme for calm reflection. Every colour used across the app (links, navigation, buttons, mood badges, alerts, focus states, and surfaces) is listed below.
+The UI is themed using the Catppuccin Latte palette which is a warm, low‑contrast light theme for calm reflection. Every colour used across the app (links, navigation, buttons, mood badges, alerts, focus states, and surfaces) is listed below.
 
 ![Colour swatches](readme/colours.png)
 
@@ -332,10 +342,72 @@ erDiagram
 ```
 
 
+# Features
+
+The following screenshots show the app across desktop and mobile views, including confirmation modals and entry flows.
+
+
+![Desktop home (logged in)](readme/desktop-home-logged-in.png)
+
+*Desktop dashboard view when a user is authenticated.*
+
+![Desktop home (logged out)](readme/desktop-home-logged-out.png)
+
+*Public home view showing inspirational quote and sign-in actions.*
+
+![Entry list — desktop](readme/entry-list-desktop-screen.png)
+
+*Entry list layout on desktop with pagination and search.*
+
+![Entry list — mobile](readme/entry-list-mobile-screen.png)
+
+*Entry list layout on mobile (compact cards and actions).*
+
+![Pagination example](readme/pagination.png)
+
+*Pagination controls showing multiple pages of entries.*
+
+![Create entry screen](readme/create-entry-screen.png)
+
+*Create entry form with mood selector, rating, title, content, and gratitude items.*
+
+![Update entry screen](readme/update-entry-screen.png)
+
+*Edit/update entry form pre-filled with existing values.*
+
+![Delete confirmation modal](readme/delete-modal.png)
+
+*Delete confirmation modal shown before removing an entry.*
+
+![Delete confirmation screen](readme/delete-screen.png)
+
+*Full-screen delete confirmation flow with success feedback.*
+
+![Entry detail view](readme/entry-detail.png)
+
+*Detailed entry page with mood badge, rating and gratitude items.*
+
+
+![Entry saved confirmation](readme/Entry-saved-screen.png)
+
+*Confirmation screen shown after successfully saving an entry.*
+
+![Mobile home](readme/mobile-home.png)
+
+*Mobile home/dashboard showing quick-create and recent entries.*
+
+![Sign out confirmation modal](readme/sign-out-modal.png)
+
+*Sign out confirmation modal to prevent accidental logout.*
+
+![Signed out / logged out state](readme/sign-out-confirm.png)
+
+*Public page after signing out, showing sign-in and sign-up actions.*
+
 
 # Testing
 
-See `TESTING.md` for full instructions on running the automated test suite (Django test runner, `testcontainers`, Docker usage, and CI notes). The project also includes manual testing — HTML validation, CSS checks, WAVE accessibility scans, Lighthouse audits, and user-story walkthroughs — to help ensure markup quality, visual consistency, accessibility, and real-world behaviour across browsers and viewports.
+See `TESTING.md` for full instructions on running the automated test suite (Django test runner, `testcontainers`, and Docker usage). The project also includes manual testing - HTML validation, CSS checks, WAVE accessibility scans, Lighthouse audits, PEP8/ Flake8 for python, and user-story walkthroughs to help ensure quality, visual consistency, accessibility, and real-world behaviour across browsers and viewports. Alongside functionality of the backend to store the with all CRUD actions.
 
 Run the full test suite locally with:
 
@@ -344,6 +416,19 @@ python manage.py test
 ```
 
 # Bugs
+
+## Gratitude Entries not appearing in edit
+
+When editing journal entries after model constraints were created there was an issue where no gratitude text boxes would appear. This was then fixed by creating a counter from 0 to 3 and removing for any journal items that already exist, ensuring that the populated items exist, and also non populated items if applicable.
+
+
+## Pywin32 dependency
+
+When deploying to heroku there was an issue where the pywin32 dependency did not work, as heroku uses Linux I removed this dependency from the requirements.txt and on the next build it worked as intended.
+
+## Toast manager script undefined element
+
+There was an issue at times when loading different pages that the toast manager would have an undefined toast this is because the toast manager appended an element when instansiated removing  `this.container.appendChild(toastEl);` fixed the bug and restored normal functionality without the error.
 
 # Deployment
 
@@ -360,12 +445,11 @@ The application is deployed to **Heroku** using the following setup:
 
 To deploy from scratch:
 
-```bash
-heroku create
-heroku addons:create heroku-postgresql:essential-0
-heroku config:set SECRET_KEY=<your-secret-key> DEBUG=False
-git push heroku main
-```
+- Clone the repostiory
+- Go to the Heroku dashboard and create a new Dyno with a unique and select a region.
+- Once the Dyno has been created link the GitHub repository to the Dyno.
+- Ensure that the environment variables are set as mentioned above in the settings tab. (`SECRET_KEY`, `DEBUG`, `DATABASE_URL`)
+- Deploy the project and optionally setup automatic deployment.
 
 # Technologies used
 
@@ -394,6 +478,27 @@ git push heroku main
 
 - Gunicorn - WSGI server for production
 - Whitenoise - Static file serving in production
-- Heroku  - Deployment target; `DATABASE_URL`/config vars used in production
+- Heroku  - Deployment target `DATABASE_URL`/config vars used in production
 
-# Development Process
+# AI Usage
+
+Artificial intelligence has been used to create this project, in various ways, the key features it helped with are firstly the user stories which were generated using AI from a rough plan of the project, I then took these user stories and expanded on them, rewriting them to be fit for development while adding my own additional user stories.
+
+I have also used AI to help with the development of the project with scaffolding some code this was done by providing the entity relationship digram this helped me to create some of the basic code for the models, which I then adjusted to ensure that it met the requirements.
+
+For the testing I have also used AI to ensure that the tests are created and accepted the code and tested them to ensure that they tested the functionality as intended, helping me to create a good well rounded project. AI has been used to ensure the performance of the site is optimal, these were to optimise the queries and keep queries pre-loaded during the search.
+
+
+# Future Improvements
+
+- Dark Mode
+- User password reset
+- Mood charts
+- Filtering
+- Export data
+- Edit Journal Entry modal
+
+# Credits
+
+- [Inspirational quotes](https://www.therapyden.com/blog/mental-health-quotes) from therapy den.
+- The icon image was generated using [Gemini](https://gemini.google.com/app) Nano banana.
