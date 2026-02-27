@@ -1,14 +1,14 @@
-# MoodJournal
+# Mood Journal
 
-A personal mood and gratitude journaling web application built with Django. Users can record daily journal entries, track their mood, rate their day, and list things they are grateful for — all in a calm, distraction-free interface.
+A personal mood and gratitude journaling web application built with Django. Users can record daily journal entries, track their mood, rate their day, and list things they are grateful for - all in a calm, distraction-free interface.
 
-The project can be viewed here - [Live link](https://mindful-mood-journal-ca071333a6dc.herokuapp.com/)
+[Live link](https://mindful-mood-journal-ca071333a6dc.herokuapp.com/)
+
 ---
 
 # Table of Contents
 
-- [MoodJournal](#moodjournal)
-  - [The project can be viewed here - Live link](#the-project-can-be-viewed-here---live-link)
+- [Mood Journal](#mood-journal)
 - [Table of Contents](#table-of-contents)
 - [Purpose of project](#purpose-of-project)
 - [User Experience Design](#user-experience-design)
@@ -502,3 +502,4 @@ For the testing I have also used AI to ensure that the tests are created and acc
 
 - [Inspirational quotes](https://www.therapyden.com/blog/mental-health-quotes) from therapy den.
 - The icon image was generated using [Gemini](https://gemini.google.com/app) Nano banana.
+- Styling inspired by [Catppuccin](https://catppuccin.com/).
