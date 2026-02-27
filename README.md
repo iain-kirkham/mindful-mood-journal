@@ -407,7 +407,7 @@ The following screenshots show the app across desktop and mobile views, includin
 
 # Testing
 
-See `TESTING.md` for full instructions on running the automated test suite (Django test runner, `testcontainers`, and Docker usage). The project also includes manual testing - HTML validation, CSS checks, WAVE accessibility scans, Lighthouse audits, PEP8/ Flake8 for python, and user-story walkthroughs to help ensure quality, visual consistency, accessibility, and real-world behaviour across browsers and viewports. Alongside functionality of the backend to store the with all CRUD actions.
+See [TESTING.md](https://github.com/iain-kirkham/mindful-mood-journal/blob/main/TESTING.md) for full instructions on running the automated test suite (Django test runner, `testcontainers`, and Docker usage). The project also includes manual testing - HTML validation, CSS checks, WAVE accessibility scans, Lighthouse audits, PEP8/ Flake8 for python, and user-story walkthroughs to help ensure quality, visual consistency, accessibility, and real-world behaviour across browsers and viewports. Alongside functionality of the backend to store the with all CRUD actions.
 
 Run the full test suite locally with:
 
