@@ -1,23 +1,43 @@
 # Testing
 
-This document describes how to run the test suite for MoodJournal.
+## Table of Contents
+
+- [Testing](#testing)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Integration tests (testcontainers)](#integration-tests-testcontainers)
+  - [Environment variables used by tests](#environment-variables-used-by-tests)
+  - [Run a local PostgreSQL for development (optional)](#run-a-local-postgresql-for-development-optional)
+  - [Run the full test suite](#run-the-full-test-suite)
+    - [Latest local test run](#latest-local-test-run)
+  - [Manual testing](#manual-testing)
+    - [HTML validation](#html-validation)
+    - [CSS validation](#css-validation)
+    - [Accessibility](#accessibility)
+    - [Performance and Best Practices](#performance-and-best-practices)
+    - [Python Validation PEP8](#python-validation-pep8)
+    - [JavaScript Validation JSHint](#javascript-validation-jshint)
+    - [User-story testing (manual)](#user-story-testing-manual)
 
 ## Overview
 
 - Unit and integration tests use Django's built-in test runner.
 - Integration tests exercise database-level constraints using `testcontainers`.
 - Docker is required for `testcontainers` and is also used to run a local PostgreSQL instance during development.
-
-## Run the full test suite
-
-```bash
-python manage.py test
-```
+- Frontend validation: HTML is validated with the W3C HTML validator, CSS with the W3C CSS validator, and JavaScript is linted with JSHint and manually tested in-browser.
+- Python validation: Python code is checked with `flake8` and CI linting rules to enforce PEP8 and project standards.
+- Performance and best-practices: Lighthouse audits were run and with high results for all metrics tested.
+- User-story QA: Manual user-story testing was performed against the acceptance criteria the results are summarised in the User-story QA section.
 
 ## Integration tests (testcontainers)
 
 - Ensure Docker is running locally.
-- Tests that require `testcontainers` will start PostgreSQL containers automatically; no manual database provisioning is required.
+- Tests requiring `testcontainers` will start PostgreSQL containers automatically; manual database provisioning is not required.
+
+## Environment variables used by tests
+
+- `DATABASE_URL` — Optional when using a manually provisioned database; `testcontainers` will create or override as needed.
+- `SECRET_KEY` and `DEBUG` — Required by `env.py` and should be set for local testing.
 
 ## Run a local PostgreSQL for development (optional)
 
@@ -42,23 +62,39 @@ volumes:
 
 - Update your local `DATABASE_URL`/`env.py` to point at `postgres://moodjournal:secret@localhost:5432/moodjournal` when using this compose file.
 
-## Environment variables used by tests
+## Run the full test suite
 
-- `DATABASE_URL` — optional when using a manually provisioned DB; `testcontainers` will create/override as needed.
-- environment variables required by `env.py`  (`SECRET_KEY`, `DEBUG`) should be set for local testing.
+To run the full test suit just use the built in test runner from django and it will bootstrap the testcontainers automatically.
+
+```bash
+python manage.py test
+```
+
+### Latest local test run
+
+```
+--- Container Active on localhost:51618 ---
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+
+Ran 79 tests in 36.503s
+
+OK
+Destroying test database for alias 'default'...
+```
 
 ## Manual testing
 
 ### HTML validation
 
-I have validated my website in the HTML W3C validator and found no errors:
+I have validated my website in the [HTML W3C validator](https://validator.w3.org/) and found no errors:
 
 ![HTML validation](readme/html-validation.png)
 
 
 ### CSS validation
 
-I have also validated my website in the W3C CSS validator and found no errors:
+I have also validated my website in the [W3C CSS validator](https://jigsaw.w3.org/css-validator/) and found no errors:
 
 ![CSS Validation](readme/css-validation.png)
 
@@ -69,30 +105,67 @@ I have also completed some accessibility testing this was performed using [WAVE]
 ![WAVE accessibility](readme/wave-a11y.png)
 
 
-### Performance & Best Practices
+### Performance and Best Practices
 
 I have used Lighthouse in Google chrome on my deployed heroku site so performance and scores all reflect that in the production environment, these returned no major issues on either platform as far as best practices, SEO, and accessibility go, just some minor performance loss on mobile.
 
-Desktop
-
 ![Lighthouse Desktop](readme/Lighthouse-desktop.png)
 
-Mobile
+*Lighthouse — Desktop results*
 
 ![Lighthouse Mobile](readme/Lighthouse-mobile.png)
+
+*Lighthouse — Mobile results*
 
 | Device  | Performance | Accessibility | Best Practices |  SEO |
 | ------- | ----------: | ------------: | -------------: | ---: |
 | Desktop |         100 |           100 |            100 |  100 |
 | Mobile  |          97 |           100 |            100 |  100 |
 
-### User-story QA (manual)
 
-- Walkthroughs: register, login/logout, create/edit/delete entry, search/filter, export CSV, and profile flows.
-- Cross-browser: verify in latest Chrome, Firefox, and a mobile browser or emulated mobile viewport.
-- Record: steps taken, observed behaviour, screenshots, and any console/network errors.
+### Python Validation PEP8
 
-### Checklist & notes
+I have validated my python code through the flake8 linter and I have also ran the code through the CI Python linter.
+The inital checks on the python validation with pep8 did return issues related to line limits (79 characters) but have since been resolved, the application was then retested to check for regressions and passed.
 
-- Keep a short checklist per user story and link manual test notes to failing automated tests or issues.
-- Document environment details (browser versions, Docker/local DB state, env vars) to aid repro.
+![pep8 test](readme/pep8test.png)
+
+### JavaScript Validation JSHint
+
+I have validated all of my JavaScript code through the JSHint and have only got minor warnings back and no major errors.
+
+
+![JSHint entries](readme/jshint-entries.png)
+
+*JSHint - entries results*
+
+![JSHint toast](readme/jshint-entries.png)
+
+*JSHint - toast results*
+
+
+### User-story testing (manual)
+
+I have manually tested my user flows against the user stories which I had defined in the main read me, I have ensured that they reach the acceptance criteria, and also that the features mentioned function as intended, please see the table below for the user stories I have tested.
+
+| User Story | Status | Notes |
+| --- | :---: | --- |
+| User registration | Passed | Tests passed |
+| User login | Passed | Tests passed |
+| User logout | Passed | Tests passed |
+| Conditional navigation bar | Passed | Tests passed |
+| Create journal entry | Passed | Tests passed |
+| Gratitude items | Passed | Tests passed |
+| Paginated entry list | Passed | Tests passed |
+| Detailed entry view | Passed | Tests passed |
+| Edit entry | Passed | Tests passed |
+| Random inspirational quote | Passed | Tests passed |
+| Responsive design | Passed | Tests passed |
+| Data privacy | Passed | Tests passed |
+| Django admin management | Passed | Tests passed |
+| Delete entry with confirmation | Passed | Tests passed |
+| Keyword search | Passed | Tests passed |
+| Notifications | Passed | Tests passed |
+| Backdating journal entries | Passed | Tests passed |
+| Toast notifications for user feedback | Passed | Tests passed |
+
