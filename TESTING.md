@@ -18,6 +18,7 @@
     - [Python Validation PEP8](#python-validation-pep8)
     - [JavaScript Validation JSHint](#javascript-validation-jshint)
     - [User-story testing (manual)](#user-story-testing-manual)
+    - [Browser Compatibility](#browser-compatibility)
 
 ## Overview
 
@@ -168,4 +169,11 @@ I have manually tested my user flows against the user stories which I had define
 | Notifications | Passed | Tests passed |
 | Backdating journal entries | Passed | Tests passed |
 | Toast notifications for user feedback | Passed | Tests passed |
+
+### Browser Compatibility
+
+I have managed to test my website on a few different browsers and ensured compatability with:
+- Chrome
+- Firefox
+- Microsoft Edge
 
