@@ -48,7 +48,7 @@ def make_entry(user, **kwargs):
     return Entry.objects.create(user=user, **defaults)
 
 
-# Management-form fields required by GratitudeFormSet (prefix = gratitude_items)
+# Management-form fields required by GratitudeFormSet
 def gratitude_management_form(total=3, initial=0):
     return {
         "gratitude_items-TOTAL_FORMS": total,
@@ -121,9 +121,10 @@ class EntryListViewTests(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(self.url)
-        self.assertRedirects(
-            response, f"{LOGIN_URL}?next={self.url}", fetch_redirect_response=False
-        )
+        expected = f"{LOGIN_URL}?next={self.url}"
+        self.assertRedirects(response, expected, fetch_redirect_response=False)
+        expected = f"{LOGIN_URL}?next={self.url}"
+        self.assertRedirects(response, expected, fetch_redirect_response=False)
 
     def test_get_returns_200(self):
         self.client.force_login(self.user)
@@ -209,13 +210,17 @@ class EntryDetailViewTests(TestCase):
         self.user = make_user()
         self.other = make_user(username="carol")
         self.entry = make_entry(self.user)
-        self.url = reverse("journal:entry_detail", kwargs={"pk": self.entry.pk})
+        self.url = reverse(
+            "journal:entry_detail",
+            kwargs={"pk": self.entry.pk},
+        )
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(self.url)
-        self.assertRedirects(
-            response, f"{LOGIN_URL}?next={self.url}", fetch_redirect_response=False
-        )
+        expected = f"{LOGIN_URL}?next={self.url}"
+        self.assertRedirects(response, expected, fetch_redirect_response=False)
+        expected = f"{LOGIN_URL}?next={self.url}"
+        self.assertRedirects(response, expected, fetch_redirect_response=False)
 
     def test_get_returns_200(self):
         self.client.force_login(self.user)
@@ -250,9 +255,10 @@ class EntryCreateViewGetTests(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(self.url)
-        self.assertRedirects(
-            response, f"{LOGIN_URL}?next={self.url}", fetch_redirect_response=False
-        )
+        expected = f"{LOGIN_URL}?next={self.url}"
+        self.assertRedirects(response, expected, fetch_redirect_response=False)
+        expected = f"{LOGIN_URL}?next={self.url}"
+        self.assertRedirects(response, expected, fetch_redirect_response=False)
 
     def test_get_returns_200(self):
         self.client.force_login(self.user)
@@ -290,7 +296,8 @@ class EntryCreateViewPostTests(TestCase):
         data = valid_entry_post(**{"gratitude_items-0-item_text": "Health"})
         self.client.post(self.url, data)
         entry = Entry.objects.get(user=self.user)
-        self.assertTrue(entry.gratitude_items.filter(item_text="Health").exists())
+        exists = entry.gratitude_items.filter(item_text="Health").exists()
+        self.assertTrue(exists)
 
     def test_valid_post_redirects_to_success(self):
         response = self.client.post(self.url, valid_entry_post())
@@ -298,11 +305,6 @@ class EntryCreateViewPostTests(TestCase):
 
     def test_valid_post_sets_success_message(self):
         self.client.post(self.url, valid_entry_post(title="Sunny Day"))
-        messages = list(
-            self.client.get(
-                reverse("journal:entry_create_success")
-            ).wsgi_request._messages
-        )
         # Message is consumed on the next request; check via follow
         response = self.client.post(
             self.url, valid_entry_post(title="Day Two"), follow=True
@@ -337,13 +339,15 @@ class EntryUpdateViewGetTests(TestCase):
         self.user = make_user()
         self.other = make_user(username="dave")
         self.entry = make_entry(self.user, title="Original Title")
-        self.url = reverse("journal:entry_update", kwargs={"pk": self.entry.pk})
+        self.url = reverse(
+            "journal:entry_update",
+            kwargs={"pk": self.entry.pk},
+        )
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(self.url)
-        self.assertRedirects(
-            response, f"{LOGIN_URL}?next={self.url}", fetch_redirect_response=False
-        )
+        expected = f"{LOGIN_URL}?next={self.url}"
+        self.assertRedirects(response, expected, fetch_redirect_response=False)
 
     def test_get_returns_200(self):
         self.client.force_login(self.user)
@@ -376,7 +380,10 @@ class EntryUpdateViewPostTests(TestCase):
         self.user = make_user()
         self.other = make_user(username="eve")
         self.entry = make_entry(self.user, title="Old Title")
-        self.url = reverse("journal:entry_update", kwargs={"pk": self.entry.pk})
+        self.url = reverse(
+            "journal:entry_update",
+            kwargs={"pk": self.entry.pk},
+        )
         self.client.force_login(self.user)
 
     def _edit_formset_data(self):
@@ -408,9 +415,11 @@ class EntryUpdateViewPostTests(TestCase):
 
     def test_valid_post_redirects_to_detail(self):
         response = self.client.post(self.url, self.valid_update_post())
-        self.assertRedirects(
-            response, reverse("journal:entry_detail", kwargs={"pk": self.entry.pk})
+        expected = reverse(
+            "journal:entry_detail",
+            kwargs={"pk": self.entry.pk},
         )
+        self.assertRedirects(response, expected)
 
     def test_valid_post_sets_success_message(self):
         response = self.client.post(
@@ -445,13 +454,15 @@ class EntryDeleteViewTests(TestCase):
         self.user = make_user()
         self.other = make_user(username="frank")
         self.entry = make_entry(self.user)
-        self.url = reverse("journal:entry_delete", kwargs={"pk": self.entry.pk})
+        self.url = reverse(
+            "journal:entry_delete",
+            kwargs={"pk": self.entry.pk},
+        )
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(self.url)
-        self.assertRedirects(
-            response, f"{LOGIN_URL}?next={self.url}", fetch_redirect_response=False
-        )
+        expected = f"{LOGIN_URL}?next={self.url}"
+        self.assertRedirects(response, expected, fetch_redirect_response=False)
 
     def test_get_returns_200(self):
         self.client.force_login(self.user)

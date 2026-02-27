@@ -127,7 +127,10 @@ class GratitudeItemStrTests(TestCase):
     def setUp(self):
         user = make_user()
         entry = make_entry(user)
-        self.item = GratitudeItem.objects.create(entry=entry, item_text="Sunshine")
+        self.item = GratitudeItem.objects.create(
+            entry=entry,
+            item_text="Sunshine",
+        )
 
     def test_str_equals_item_text(self):
         self.assertEqual(str(self.item), "Sunshine")

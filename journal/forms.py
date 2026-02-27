@@ -103,17 +103,26 @@ class GratitudeItemForm(forms.ModelForm):
         # Treat whitespace-only input as empty if changed, require non-empty.
         if self.has_changed() and not text:
             raise forms.ValidationError(
-                "Gratitude item cannot be blank. Leave the field empty to skip it."
+                "Gratitude item cannot be blank. "
+                "Leave the field empty to skip it."
             )
         return text
 
 
 GratitudeFormSet = inlineformset_factory(
-    Entry, GratitudeItem, form=GratitudeItemForm, extra=3, can_delete=False
+    Entry,
+    GratitudeItem,
+    form=GratitudeItemForm,
+    extra=3,
+    can_delete=False,
 )
 
 GratitudeEditFormSet = inlineformset_factory(
-    Entry, GratitudeItem, form=GratitudeItemForm, extra=0, can_delete=False
+    Entry,
+    GratitudeItem,
+    form=GratitudeItemForm,
+    extra=0,
+    can_delete=False,
 )
 
 
@@ -124,5 +133,9 @@ def make_gratitude_edit_formset(extra=0):
     regardless of how many gratitude items the entry already has.
     """
     return inlineformset_factory(
-        Entry, GratitudeItem, form=GratitudeItemForm, extra=extra, can_delete=False
+        Entry,
+        GratitudeItem,
+        form=GratitudeItemForm,
+        extra=extra,
+        can_delete=False,
     )

@@ -135,4 +135,6 @@ class Quote(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.text[:50]}{'...' if len(self.text) > 50 else ''} - {self.author}"
+        preview = self.text[:50]
+        ellipsis = "..." if len(self.text) > 50 else ""
+        return f"{preview}{ellipsis} - {self.author}"

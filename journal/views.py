@@ -1,7 +1,8 @@
 """Views for the journal application.
 
 Provides CRUD operations for journal entries along with search functionality,
-gratitude item management via inline formsets, and a home page with random quotes.
+gratitude item management via inline formsets,
+and a home page with random quotes.
 
 All entry-related views require user authentication and ensure users can only
 access their own entries.
@@ -29,7 +30,8 @@ class EntryCreateView(LoginRequiredMixin, View):
     """View for creating a new journal entry with optional gratitude items.
 
     GET: Display empty entry form and gratitude formset.
-    POST: Validate and save entry with associated gratitude items in a transaction.
+    POST: Validate and save entry with associated gratitude
+    items in a transaction.
 
     Uses an atomic transaction to ensure the entry is only saved if both the
     main form and the gratitude formset are valid, preventing orphaned entries.
@@ -40,7 +42,9 @@ class EntryCreateView(LoginRequiredMixin, View):
         form = EntryForm()
         formset = GratitudeFormSet()
         return render(
-            request, "journal/entry_form.html", {"form": form, "formset": formset}
+            request,
+            "journal/entry_form.html",
+            {"form": form, "formset": formset},
         )
 
     def post(self, request):
@@ -54,7 +58,8 @@ class EntryCreateView(LoginRequiredMixin, View):
         form = EntryForm(request.POST)
         if form.is_valid():
             try:
-                # Use atomic transaction to rollback if gratitude formset is invalid
+                # Use atomic transaction to rollback if gratitude
+                # formset is invalid
                 with transaction.atomic():
                     # Save entry with current user
                     entry = form.save(commit=False)
@@ -66,19 +71,22 @@ class EntryCreateView(LoginRequiredMixin, View):
                         # Trigger rollback by raising exception
                         raise ValueError("gratitude formset invalid")
                     formset.save()
-                messages.success(
-                    request, f'Entry "{entry.title}" created successfully!'
-                )
+                msg = f'Entry "{entry.title}" created successfully!'
+                messages.success(request, msg)
                 return redirect("journal:entry_create_success")
             except ValueError:
                 # Formset contains validation errors will be rendered below
-                messages.error(request, "Please correct the errors in the form.")
+                msg = "Please correct the errors in the form."
+                messages.error(request, msg)
         else:
             # Main form invalid bind formset to preserve user input
             formset = GratitudeFormSet(request.POST)
-            messages.error(request, "Please correct the errors in the form.")
+            msg = "Please correct the errors in the form."
+            messages.error(request, msg)
         return render(
-            request, "journal/entry_form.html", {"form": form, "formset": formset}
+            request,
+            "journal/entry_form.html",
+            {"form": form, "formset": formset},
         )
 
 
@@ -98,12 +106,14 @@ class EntryListView(LoginRequiredMixin, ListView):
         """Filter entries for current user and apply optional search.
 
         Uses prefetch_related for gratitude_items to minimise database queries.
-        Search term is matched against title, content, mood, and gratitude text.
+        Search term is matched against title, content, mood, and
+        gratitude text.
         """
-        queryset = Entry.objects.filter(user=self.request.user).prefetch_related(
-            "gratitude_items"
-        )
-        # Apply search filter if a search term is provided, matching across multiple fields.
+        queryset = Entry.objects.filter(
+            user=self.request.user,
+        ).prefetch_related("gratitude_items")
+        # Apply search filter if a search term is provided,
+        # matching across multiple fields.
         search = self.request.GET.get("search", "").strip()
         if search:
             queryset = queryset.filter(
@@ -159,12 +169,12 @@ class EntryDeleteView(LoginRequiredMixin, DeleteView):
         entry_title = self.get_object().title
         try:
             response = super().form_valid(form)
-            messages.success(self.request, f'"{entry_title}" was deleted successfully.')
+            msg = f'"{entry_title}" was deleted successfully.'
+            messages.success(self.request, msg)
             return response
         except Exception:
-            messages.error(
-                self.request, f'Could not delete "{entry_title}". Please try again.'
-            )
+            msg = f'Could not delete "{entry_title}". Please try again.'
+            messages.error(self.request, msg)
             return redirect(self.success_url)
 
 
@@ -195,7 +205,12 @@ class EntryUpdateView(LoginRequiredMixin, View):
         return render(
             request,
             "journal/entry_form.html",
-            {"form": form, "formset": formset, "is_edit": True, "entry": entry},
+            {
+                "form": form,
+                "formset": formset,
+                "is_edit": True,
+                "entry": entry,
+            },
         )
 
     def post(self, request, pk):
@@ -211,14 +226,20 @@ class EntryUpdateView(LoginRequiredMixin, View):
         if form.is_valid() and formset.is_valid():
             entry = form.save()
             formset.save()
-            messages.success(request, f'Entry "{entry.title}" updated successfully!')
+            msg = f'Entry "{entry.title}" updated successfully!'
+            messages.success(request, msg)
             return redirect("journal:entry_detail", pk=entry.pk)
         else:
             messages.error(request, "Please correct the errors in the form.")
         return render(
             request,
             "journal/entry_form.html",
-            {"form": form, "formset": formset, "is_edit": True, "entry": entry},
+            {
+                "form": form,
+                "formset": formset,
+                "is_edit": True,
+                "entry": entry,
+            },
         )
 
 
